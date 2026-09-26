@@ -1,6 +1,6 @@
 # Postgres history: 1970 → 2026
 
-**Watch:** [on X](https://x.com/samokhvalov/status/2103920825581842567) · [download (Releases)](https://github.com/NikolayS/pgfilm/releases/tag/postgres-history-2026-09-26)
+**Watch:** [on X](https://x.com/samokhvalov/status/2103920825581842567) · [on LinkedIn](https://www.linkedin.com/posts/samokhvalov_this-one-is-about-postgres-40-years-1986-ugcPost-7509685236369252353-XYly/) · [download (Releases)](https://github.com/NikolayS/pgfilm/releases/tag/postgres-history-2026-09-26)
 
 A 2:42, 1080p30 motion-graphics film: from Codd's 1970 paper through Berkeley (Ingres, POSTGRES), Postgres95, the 1996 first commit, 30 years of releases, the people who built it, AI, and what is being debated next.
 
