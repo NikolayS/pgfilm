@@ -1,0 +1,361 @@
+[
+  {
+    "feature": "Point-in-time recovery (PITR)",
+    "version": "8.0",
+    "credit_onscreen": ["Simon Riggs"],
+    "all_names": ["Simon Riggs"],
+    "source": {
+      "branch": "upstream/REL8_0_STABLE",
+      "path": "doc/src/sgml/release-8.0.sgml",
+      "line": 3741,
+      "quote": "Add WAL file archiving and point-in-time recovery (Simon Riggs)"
+    }
+  },
+  {
+    "feature": "Autovacuum integrated into server",
+    "version": "8.1",
+    "credit_onscreen": ["Alvaro Herrera"],
+    "all_names": ["Alvaro Herrera"],
+    "note": "Release notes credit as \"(Alvaro)\" (short form of Alvaro Herrera, consistent with other 8.1 items attributed to him elsewhere in the same file).",
+    "source": {
+      "branch": "upstream/REL8_1_STABLE",
+      "path": "doc/src/sgml/release-8.1.sgml",
+      "line": 3477,
+      "quote": "Move <filename>/contrib/pg_autovacuum</> into the main server (Alvaro)"
+    }
+  },
+  {
+    "feature": "HOT (heap-only tuples)",
+    "version": "8.3",
+    "credit_onscreen": ["Pavan Deolasee"],
+    "all_names": ["Pavan Deolasee", "with ideas from many others"],
+    "note": "Notes credit only Pavan Deolasee by name, with a generic acknowledgment of others' ideas (not enumerated).",
+    "source": {
+      "branch": "upstream/REL8_3_STABLE",
+      "path": "doc/src/sgml/release-8.3.sgml",
+      "line": 6612,
+      "quote": "Heap-Only Tuples (<acronym>HOT</>) accelerate space reuse for most <command>UPDATE</>s and <command>DELETE</>s (Pavan Deolasee, with ideas from many others)"
+    }
+  },
+  {
+    "feature": "Full text search integrated into core",
+    "version": "8.3",
+    "credit_onscreen": ["Teodor Sigaev", "Oleg Bartunov"],
+    "all_names": ["Teodor Sigaev", "Oleg Bartunov"],
+    "note": "Release notes use short first names \"(Teodor, Oleg)\" -- these are Teodor Sigaev and Oleg Bartunov, the long-time tsearch2/contrib authors (confirmed by their full names used elsewhere in the same release notes, e.g. 9.4 jsonb credits).",
+    "source": {
+      "branch": "upstream/REL8_3_STABLE",
+      "path": "doc/src/sgml/release-8.3.sgml",
+      "line": 7166,
+      "quote": "Full text search is integrated into the core database system (Teodor, Oleg)"
+    }
+  },
+  {
+    "feature": "Window functions",
+    "version": "8.4",
+    "credit_onscreen": ["Hitoshi Harada"],
+    "all_names": ["Hitoshi Harada"],
+    "source": {
+      "branch": "upstream/REL8_4_STABLE",
+      "path": "doc/src/sgml/release-8.4.sgml",
+      "line": 7735,
+      "quote": "Add support for <literal>WINDOW</> functions (Hitoshi Harada)"
+    }
+  },
+  {
+    "feature": "Streaming replication",
+    "version": "9.0",
+    "credit_onscreen": ["Fujii Masao", "Heikki Linnakangas"],
+    "all_names": ["Fujii Masao", "Heikki Linnakangas"],
+    "source": {
+      "branch": "upstream/REL9_0_STABLE",
+      "path": "doc/src/sgml/release-9.0.sgml",
+      "line": 8251,
+      "quote": "Allow write-ahead log (<acronym>WAL</>) data to be streamed to a standby server (Fujii Masao, Heikki Linnakangas)"
+    }
+  },
+  {
+    "feature": "Hot standby",
+    "version": "9.0",
+    "credit_onscreen": ["Simon Riggs", "Heikki Linnakangas"],
+    "all_names": ["Simon Riggs", "Heikki Linnakangas"],
+    "source": {
+      "branch": "upstream/REL9_0_STABLE",
+      "path": "doc/src/sgml/release-9.0.sgml",
+      "line": 8237,
+      "quote": "Allow a standby server to accept read-only queries (Simon Riggs, Heikki Linnakangas)"
+    }
+  },
+  {
+    "feature": "Synchronous replication",
+    "version": "9.1",
+    "credit_onscreen": ["Simon Riggs", "Fujii Masao"],
+    "all_names": ["Simon Riggs", "Fujii Masao"],
+    "source": {
+      "branch": "upstream/REL9_1_STABLE",
+      "path": "doc/src/sgml/release-9.1.sgml",
+      "line": 9589,
+      "quote": "Allow <link linkend=\"synchronous-replication\">synchronous replication</link> (Simon Riggs, Fujii Masao)"
+    }
+  },
+  {
+    "feature": "JSON data type",
+    "version": "9.2",
+    "credit_onscreen": ["Robert Haas"],
+    "all_names": ["Robert Haas"],
+    "source": {
+      "branch": "upstream/REL9_2_STABLE",
+      "path": "doc/src/sgml/release-9.2.sgml",
+      "line": 10910,
+      "quote": "Add a <link linkend=\"datatype-json\"><type>JSON</type></link> data type (Robert Haas)"
+    }
+  },
+  {
+    "feature": "JSONB",
+    "version": "9.4",
+    "credit_onscreen": ["Oleg Bartunov", "Teodor Sigaev", "Alexander Korotkov"],
+    "all_names": ["Oleg Bartunov", "Teodor Sigaev", "Alexander Korotkov", "Peter Geoghegan", "Andrew Dunstan"],
+    "source": {
+      "branch": "upstream/REL9_4_STABLE",
+      "path": "doc/src/sgml/release-9.4.sgml",
+      "line": 15522,
+      "quote": "Add <link linkend=\"datatype-json\"><type>jsonb</></link>, a more capable and efficient data type for storing <acronym>JSON</> data (Oleg Bartunov, Teodor Sigaev, Alexander Korotkov, Peter Geoghegan, Andrew Dunstan)"
+    }
+  },
+  {
+    "feature": "Logical decoding",
+    "version": "9.4",
+    "credit_onscreen": ["Andres Freund"],
+    "all_names": ["Andres Freund"],
+    "source": {
+      "branch": "upstream/REL9_4_STABLE",
+      "path": "doc/src/sgml/release-9.4.sgml",
+      "line": 15104,
+      "quote": "Add support for <link linkend=\"logicaldecoding\">logical decoding</> of WAL data, to allow database changes to be streamed out in a customizable format (Andres Freund)"
+    }
+  },
+  {
+    "feature": "INSERT ... ON CONFLICT (UPSERT)",
+    "version": "9.5",
+    "credit_onscreen": ["Peter Geoghegan", "Heikki Linnakangas", "Andres Freund"],
+    "all_names": ["Peter Geoghegan", "Heikki Linnakangas", "Andres Freund"],
+    "source": {
+      "branch": "upstream/REL9_5_STABLE",
+      "path": "doc/src/sgml/release-9.5.sgml",
+      "line": 16200,
+      "quote": "Allow <link linkend=\"sql-on-conflict\"><command>INSERT</></>s that would generate constraint conflicts to be turned into <command>UPDATE</>s or ignored (Peter Geoghegan, Heikki Linnakangas, Andres Freund)"
+    }
+  },
+  {
+    "feature": "Parallel query (parallel sequential scan etc.)",
+    "version": "9.6",
+    "credit_onscreen": ["Robert Haas", "Amit Kapila", "David Rowley"],
+    "all_names": ["Robert Haas", "Amit Kapila", "David Rowley", "many others"],
+    "note": "Notes explicitly say \"many others\" in addition to the three named authors.",
+    "source": {
+      "branch": "upstream/REL9_6_STABLE",
+      "path": "doc/src/sgml/release-9.6.sgml",
+      "line": 18433,
+      "quote": "Parallel queries (Robert Haas, Amit Kapila, David Rowley, many others)"
+    }
+  },
+  {
+    "feature": "Logical replication",
+    "version": "10",
+    "credit_onscreen": ["Petr Jelinek"],
+    "all_names": ["Petr Jelinek"],
+    "source": {
+      "branch": "upstream/REL_10_STABLE",
+      "path": "doc/src/sgml/release-10.sgml",
+      "line": 22602,
+      "quote": "Add the ability to <link linkend=\"logical-replication\">logically replicate</link> tables to standby servers (Petr Jelinek)"
+    }
+  },
+  {
+    "feature": "Declarative partitioning",
+    "version": "10",
+    "credit_onscreen": ["Amit Langote"],
+    "all_names": ["Amit Langote"],
+    "source": {
+      "branch": "upstream/REL_10_STABLE",
+      "path": "doc/src/sgml/release-10.sgml",
+      "line": 22805,
+      "quote": "Add table <link linkend=\"sql-createtable-partition\">partitioning syntax</link> that automatically creates partition constraints and handles routing of tuple insertions and updates (Amit Langote)"
+    }
+  },
+  {
+    "feature": "Generated columns",
+    "version": "12",
+    "credit_onscreen": ["Peter Eisentraut"],
+    "all_names": ["Peter Eisentraut"],
+    "source": {
+      "branch": "upstream/REL_12_STABLE",
+      "path": "doc/src/sgml/release-12.sgml",
+      "line": 26908,
+      "quote": "Add support for <link linkend=\"ddl-generated-columns\">generated columns</link> (Peter Eisentraut)"
+    }
+  },
+  {
+    "feature": "B-tree deduplication",
+    "version": "13",
+    "credit_onscreen": ["Anastasia Lubennikova", "Peter Geoghegan"],
+    "all_names": ["Anastasia Lubennikova", "Peter Geoghegan"],
+    "source": {
+      "branch": "upstream/REL_13_STABLE",
+      "path": "doc/src/sgml/release-13.sgml",
+      "line": 25610,
+      "quote": "More efficiently store <link linkend=\"btree-deduplication\">duplicates</link> in B-tree indexes (Anastasia Lubennikova, Peter Geoghegan)"
+    }
+  },
+  {
+    "feature": "MERGE",
+    "version": "15",
+    "credit_onscreen": ["Simon Riggs", "Pavan Deolasee", "Álvaro Herrera"],
+    "all_names": ["Simon Riggs", "Pavan Deolasee", "Álvaro Herrera", "Amit Langote"],
+    "source": {
+      "branch": "upstream/REL_15_STABLE",
+      "path": "doc/src/sgml/release-15.sgml",
+      "line": 24013,
+      "quote": "Add <acronym>SQL</acronym> <link linkend=\"sql-merge\"><command>MERGE</command></link> command to adjust one table to match another (Simon Riggs, Pavan Deolasee, Álvaro Herrera, Amit Langote)"
+    }
+  },
+  {
+    "feature": "Logical decoding on standbys",
+    "version": "16",
+    "credit_onscreen": ["Bertrand Drouvot", "Andres Freund", "Amit Khandekar"],
+    "all_names": ["Bertrand Drouvot", "Andres Freund", "Amit Khandekar"],
+    "source": {
+      "branch": "upstream/REL_16_STABLE",
+      "path": "doc/src/sgml/release-16.sgml",
+      "line": 20401,
+      "quote": "Allow <link linkend=\"logicaldecoding\">logical decoding</link> on standbys (Bertrand Drouvot, Andres Freund, Amit Khandekar)"
+    }
+  },
+  {
+    "feature": "Incremental backup",
+    "version": "17",
+    "credit_onscreen": ["Robert Haas", "Jakub Wartak", "Tomas Vondra"],
+    "all_names": ["Robert Haas", "Jakub Wartak", "Tomas Vondra"],
+    "source": {
+      "branch": "upstream/REL_17_STABLE",
+      "path": "doc/src/sgml/release-17.sgml",
+      "line": 15149,
+      "quote": "Add support for incremental file system backup (Robert Haas, Jakub Wartak, Tomas Vondra)"
+    }
+  },
+  {
+    "feature": "Logical slot failover (failover option / slot sync)",
+    "version": "17",
+    "credit_onscreen": ["Hou Zhijie", "Shveta Malik", "Ajin Cherian"],
+    "all_names": ["Hou Zhijie", "Shveta Malik", "Ajin Cherian", "Peter Smith"],
+    "note": "This feature spans FOUR separate release-note items in 17, each with slightly different author lists: (1) failover property on the replication protocol -- Hou Zhijie, Shveta Malik; (2) enabling failover on logical slots (pg_create_logical_replication_slot 5th arg) -- Hou Zhijie, Shveta Malik, Ajin Cherian; (3) sync_replication_slots GUC / slot sync worker -- Shveta Malik, Hou Zhijie, Peter Smith; (4) failover option on CREATE/ALTER SUBSCRIPTION -- Shveta Malik, Hou Zhijie, Ajin Cherian. On-screen credit picks the three names most consistently present across items (Hou Zhijie, Shveta Malik, Ajin Cherian); Peter Smith is additionally credited on the sync-worker item only. Flag: if the film wants to cite ONE canonical line, use item (2) below; if it wants the whole feature area, all four should be shown together.",
+    "source": {
+      "branch": "upstream/REL_17_STABLE",
+      "path": "doc/src/sgml/release-17.sgml",
+      "line": 15359,
+      "quote": "Enable the failover of <link linkend=\"logical-replication-subscription-slot\">logical slots</link> (Hou Zhijie, Shveta Malik, Ajin Cherian)"
+    },
+    "related_items": [
+      {"line": 15296, "quote": "Add the <literal>failover</literal> property to the <link linkend=\"protocol-replication\">replication protocol</link> (Hou Zhijie, Shveta Malik)"},
+      {"line": 15380, "quote": "Add server variable <xref linkend=\"guc-sync-replication-slots\"/> to enable failover logical slot synchronization (Shveta Malik, Hou Zhijie, Peter Smith)"},
+      {"line": 15397, "quote": "Add logical replication failover control to <link linkend=\"sql-createsubscription\"><literal>CREATE/ALTER SUBSCRIPTION</literal></link> (Shveta Malik, Hou Zhijie, Ajin Cherian)"}
+    ]
+  },
+  {
+    "feature": "B-tree skip scan",
+    "version": "18",
+    "credit_onscreen": ["Peter Geoghegan"],
+    "all_names": ["Peter Geoghegan"],
+    "source": {
+      "branch": "upstream/REL_18_STABLE",
+      "path": "doc/src/sgml/release-18.sgml",
+      "line": 9397,
+      "quote": "Allow skip scans of <link linkend=\"xfunc-sql\">btree</link> indexes (Peter Geoghegan)"
+    }
+  },
+  {
+    "feature": "Asynchronous I/O (io_uring)",
+    "version": "18",
+    "credit_onscreen": ["Andres Freund", "Thomas Munro", "Nazir Bilal Yavuz"],
+    "all_names": ["Andres Freund", "Thomas Munro", "Nazir Bilal Yavuz", "Melanie Plageman"],
+    "source": {
+      "branch": "upstream/REL_18_STABLE",
+      "path": "doc/src/sgml/release-18.sgml",
+      "line": 9494,
+      "quote": "Add an asynchronous I/O subsystem (Andres Freund, Thomas Munro, Nazir Bilal Yavuz, Melanie Plageman)"
+    }
+  },
+  {
+    "feature": "UUIDv7",
+    "version": "18",
+    "credit_onscreen": ["Andrey Borodin"],
+    "all_names": ["Andrey Borodin"],
+    "note": "Release-note credit is Andrey Borodin. The introducing commit 78c5e141e's Author: trailer is Masahiko Sawada (who committed it), but the release notes name Andrey Borodin as the feature author -- this is the standard Postgres pattern where the notes credit the patch author while the commit trailer shows the committer. Trusting the release notes per task instructions.",
+    "source": {
+      "branch": "upstream/REL_18_STABLE",
+      "path": "doc/src/sgml/release-18.sgml",
+      "line": 11334,
+      "quote": "Add <link linkend=\"datatype-uuid\"><type>UUID</type></link> version 7 generation function <link linkend=\"func_uuid_gen_table\"><function>uuidv7()</function></link> (Andrey Borodin)"
+    }
+  },
+  {
+    "feature": "WAL (write-ahead log)",
+    "version": "7.1",
+    "credit_onscreen": ["Vadim Mikheev"],
+    "all_names": ["Vadim B. Mikheev"],
+    "note": "7.1 release notes (old variablelist format) list \"Write-ahead Log (WAL)\" as a major feature with NO author credited in the item itself. Verified via the introducing commit instead: commit 479374036 \"XLOG (also known as WAL -:)) Bootstrap/Startup/Shutdown...\" (1999-10-06) and commit 5b0740d3f \"WAL\" (2000-10-28), both Author: Vadim B. Mikheev <vadim4o@yahoo.com>. Matches the requested verification (Vadim Mikheev for WAL).",
+    "source": {
+      "branch": "upstream/REL7_1_STABLE",
+      "path": "doc/src/sgml/release.sgml",
+      "line": 194,
+      "quote": "Write-ahead Log (WAL)"
+    },
+    "commit_source": {
+      "branch": "upstream/REL7_1_STABLE (history reachable from it)",
+      "commit": "47937403676d913c0e740eec6b85113865c6c8a",
+      "author_trailer": "Vadim B. Mikheev <vadim4o@yahoo.com>",
+      "date": "1999-10-06",
+      "subject": "XLOG (also known as WAL -:)) Bootstrap/Startup/Shutdown. First step in cleaning up backend initialization code."
+    }
+  },
+  {
+    "feature": "TOAST",
+    "version": "7.1",
+    "credit_onscreen": ["Jan Wieck"],
+    "all_names": ["Jan Wieck"],
+    "note": "7.1 release notes list \"TOAST\" as a major feature with NO author credited in the item itself (same old variablelist format as WAL, no per-item author). Verified via introducing commits instead, e.g. commit e2aef4969 \"Added empty TOASTER files...\" (1999-12-21) and commit 57d8080a4 \"TOAST\" (2000-07-03), both Author: Jan Wieck <JanWieck@Yahoo.com>. Matches the requested verification (Jan Wieck for TOAST).",
+    "source": {
+      "branch": "upstream/REL7_1_STABLE",
+      "path": "doc/src/sgml/release.sgml",
+      "line": 210,
+      "quote": "TOAST"
+    },
+    "commit_source": {
+      "branch": "upstream/REL7_1_STABLE (history reachable from it)",
+      "commit": "e2aef4969450da69bc759e19f62a2d6caec4a3d",
+      "author_trailer": "Jan Wieck <JanWieck@Yahoo.com>",
+      "date": "1999-12-21",
+      "subject": "Added empty TOASTER files and corrected some minor glitches in regression tests."
+    }
+  },
+  {
+    "feature": "MVCC (multi-version concurrency control)",
+    "version": "6.5",
+    "credit_onscreen": ["Vadim Mikheev"],
+    "all_names": ["Vadim Mikheev"],
+    "note": "The 6.5 release notes summary section lists \"Multi-version concurrency control(MVCC)\" as a major-feature heading with no author (old variablelist format), but the same file's detailed plain-text changelog does carry a per-item credit. Also verified via introducing commit 3f7fbf85dc5 \"Initial MVCC code...\" (1998-12-15), Author: Vadim B. Mikheev <vadim4o@yahoo.com>. Matches the requested verification (Vadim Mikheev for MVCC).",
+    "source": {
+      "branch": "upstream/REL6_5_PATCHES",
+      "path": "doc/src/sgml/release.sgml",
+      "line": 441,
+      "quote": "Multi-version concurrency control/MVCC(Vadim)"
+    },
+    "commit_source": {
+      "branch": "upstream/REL6_5_PATCHES (history reachable from it)",
+      "commit": "3f7fbf85dc5b42dfd33c803efe6c90533773576",
+      "author_trailer": "Vadim B. Mikheev <vadim4o@yahoo.com>",
+      "date": "1998-12-15",
+      "subject": "Initial MVCC code. New code for locking buffer' context."
+    }
+  }
+]

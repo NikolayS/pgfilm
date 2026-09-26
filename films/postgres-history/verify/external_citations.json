@@ -1,0 +1,285 @@
+{
+  "retrieved_at_default": "2026-09-26",
+  "claims": [
+    {
+      "id": 1,
+      "claim": "E. F. Codd, \"A Relational Model of Data for Large Shared Data Banks\", CACM 13(6), June 1970, doi 10.1145/362384.362685",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://dl.acm.org/doi/10.1145/362384.362685", "quote": "A relational model of data for large shared data banks | Communications of the ACM", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Title, journal (CACM), volume/issue 13:6, June 1970, and DOI all match the ACM DL record. dl.acm.org returns 403 to automated fetch but the search-indexed title/venue snippet and multiple independent PDF hosts (Berkeley, U Penn, Grinnell) agree.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 2,
+      "claim": "Codd at IBM San Jose (paper header 'IBM Research Laboratory, San Jose, California')",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://www.engineering.upenn.edu/~zives/03f/cis550/codd.pdf", "quote": "Information Retrieval P. BAXENDALE, Editor A Relational Model of Data for", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Multiple hosted copies of the paper (Penn, Grinnell, Berkeley mirrors, GitHub tpn/pdfs) carry the byline 'E. F. Codd, IBM Research Laboratory, San Jose, California' immediately under the title; this is well-documented and uncontested across every mirror. Could not get an OCR'd exact string via automated tools (PDF text extraction failed for the fetch tool), so treat the header text as corroborated by convergent secondary description rather than a fresh direct quote extraction.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 3,
+      "claim": "Section heading 'Information Retrieval' on the paper",
+      "verdict": "IMPRECISE",
+      "citations": [
+        {"kind": "external", "url": "https://www.engineering.upenn.edu/~zives/03f/cis550/codd.pdf", "quote": "Information Retrieval P. BAXENDALE, Editor A Relational Model of Data for", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "'Information Retrieval' is not a section heading inside Codd's paper — it is the name of the CACM subject *department* (edited by P. Baxendale) that the article was published under, printed above the title on the first page. If the film's on-screen graphic implies it is a section of the paper's own outline (like 'Introduction' or 'Normal Form'), that is wrong.",
+      "on_screen_fix": "Label it as 'CACM department: Information Retrieval (ed. P. Baxendale)' rather than 'section heading', or drop the label if space-constrained."
+    },
+    {
+      "id": 4,
+      "claim": "Opening sentence: \"Future users of large data banks must be protected from having to know how the data is organized in the machine (the internal representation)…\"",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://rebelsky.cs.grinnell.edu/Courses/CS302/2007S/Readings/codd-1970.pdf", "quote": "Future users of large data banks must be protected from having to know how the data is organized in the machine (the internal representation). A prompting service which supplies such information is not a satisfactory solution.", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Exact match to the quoted opening sentence, verified via search-engine-indexed verbatim text of the paper (consistent across multiple hosted copies).",
+      "on_screen_fix": null
+    },
+    {
+      "id": 5,
+      "claim": "Supplier/part/project/quantity relation example (S1 P1 J1 200 …) — Codd 1970 Fig. 1 'supply (supplier part project quantity)'",
+      "verdict": "UNSUPPORTED",
+      "citations": [],
+      "notes": "Could not independently confirm from a readable text extraction that Codd's 1970 paper uses a 'supplier/part/project/quantity' relation as its running example (the classic supplier/parts/shipment schema is strongly associated with Codd/Date's *relational algebra teaching examples* and with IBM System R, but I could not verify it is literally Fig. 1 of the 1970 CACM paper itself — PDF text extraction failed twice). This is flagged, not disproven; needs a human or OCR check of the actual figure in the paper (the paper's actual running examples are more oriented around 'part', 'supplier', 'employee-department-manager' relations used to illustrate normal forms, not a single canonical 'supply' relation with those exact 4 attributes).",
+      "on_screen_fix": "Verify against the actual paper figures before airing; if unconfirmed, use a generic illustrative label ('illustrative relation, not verbatim from the paper') instead of attributing the specific supplier/part/project/quantity tuple to Fig. 1."
+    },
+    {
+      "id": 6,
+      "claim": "Ingres at UC Berkeley, Stonebraker & Wong, 1973",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://en.wikipedia.org/wiki/Michael_Stonebraker", "quote": "In 1973 Stonebraker and his colleague Eugene Wong decided to start researching relational database systems", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Consistent across Wikipedia, ACM Turing Award materials, and Postgres history docs: Stonebraker joined Berkeley in 1971, began Ingres research with Eugene Wong in 1973.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 8,
+      "claim": "QUEL was the Ingres query language; syntax `range of e is employee` / `retrieve (e.name, e.dept) where e.salary > 10000`",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://en.wikipedia.org/wiki/QUEL_query_languages", "quote": "range of s is student\nappend to s (name = \"philip\", age = 17, sex = \"m\", state = \"FL\")\n\nretrieve (s.all) where s.state = \"FL\"", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "This is not a verbatim historical example, but it is syntactically valid, idiomatic QUEL: declare a tuple variable with 'range of <var> is <relation>', then 'retrieve (<target list>) where <qualification>', exactly matching the shown pattern with a different table/column names. The Wikipedia QUEL page and Ingres/Actian's own QUEL reference guide confirm this general form.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 9,
+      "claim": "\"The Design of POSTGRES\", Stonebraker & Rowe, SIGMOD 1986",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://dl.acm.org/doi/10.1145/16894.16888", "quote": "The design of POSTGRES | Proceedings of the 1986 ACM SIGMOD international conference on Management of data", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Confirmed: authors Michael Stonebraker and Lawrence A. Rowe, in Proceedings of the 1986 ACM SIGMOD International Conference on Management of Data, pp. 340-355.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 13,
+      "claim": "POSTQUEL time-travel syntax `retrieve (e.salary) from e in emp[\"1985\"]`",
+      "verdict": "INACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://encyclopedia2.thefreedictionary.com/POSTQUEL", "quote": "To find the salary of Sam at time T, one would query: retrieve (EMP.salary) from EMP [T] where EMP.name = \"Sam\"", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://www.postgresql.org/docs/6.3/c0503.htm", "quote": "SELECT name, population\n    FROM cities['epoch', 'now']\n    WHERE name = 'Mariposa';", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "The real POSTQUEL time-travel syntax bracket-qualifies the relation name directly (e.g. 'EMP [T]' or 'EMP[\"1980\"]'), not a separately-declared range variable referenced as 'from e in emp[...]' — POSTQUEL (like QUEL) declares range variables with a separate 'range of' statement, and time-travel brackets attach to the relation reference itself. The later hybrid-SQL time-travel syntax in early Postgres (v6.x, before SQL retrieve was even 'SELECT') used single-quoted bounds like cities['epoch','now'], not a bare year string in double quotes. The film's `retrieve (e.salary) from e in emp[\"1985\"]` mixes an Ingres/QUEL-style inline 'from x in y' idiom (not actually used this way in POSTQUEL) with a made-up bracket literal.",
+      "on_screen_fix": "Use `range of e is emp\\nretrieve (e.salary) where e = e[\"1985\"]` style, or simply show the attested SQL-era form `SELECT salary FROM emp['1985']` labeled explicitly as illustrative/simplified, or cite the documented example: `retrieve (EMP.salary) from EMP[T] where EMP.name = \"Sam\"`."
+    },
+    {
+      "id": 15,
+      "claim": "Postgres95 \"terminal monitor\" / `monitor` program",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://raw.githubusercontent.com/postgres/postgres/d31084e9d1118b25fd16580d9d8c2924b5740dff/src/bin/monitor/monitor.c", "quote": "fprintf(stdout,\"Welcome to the POSTGRES95 terminal monitor\\n\");", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://www.postgresql.org/docs/8.1/history.html", "quote": "A new program (psql) was provided for interactive SQL queries, which used GNU Readline. This largely superseded the old monitor program.", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "The 'Postgres95 terminal monitor' banner string is verbatim in src/bin/monitor/monitor.c of the Postgres95 1.01 virgin-sources commit (d31084e9), viewable on the public GitHub mirror. Note the nuance: the underlying 'monitor' program itself predates Postgres95 (inherited from Berkeley POSTGRES) and was soon superseded within Postgres95's own lifetime by psql — but the exact string 'POSTGRES95 terminal monitor' is real and shipped.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 19,
+      "claim": "Slonik = Russian for \"little elephant\"; mascot from 1997",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://wiki.postgresql.org/wiki/Logo", "quote": "The PostgreSQL logo is an elephant, known as \"Slonik\".", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://habr.com/en/companies/postgrespro/articles/907746/", "quote": "David Yang, a community member, suggested making an elephant the mascot in 1997.", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "'Slonik' (слоник) is indeed a Russian diminutive for 'little elephant'; translation is correct. The elephant-as-mascot idea was proposed in April 1997 (pgsql-hackers), matching the claim.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 20,
+      "claim": "\"because elephants remember\" (reason for the elephant, David Yang 1997 proposal)",
+      "verdict": "IMPRECISE",
+      "citations": [
+        {"kind": "external", "url": "https://learnsql.com/blog/the-history-of-slonik-the-postgresql-elephant-logo/", "quote": "but if you want an animal-based logo, how about some sort of elephant? After all, as the Agatha Christie title read, elephants can remember", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://wiki.postgresql.org/wiki/Logo", "quote": "[...] but if you want an animal-based logo, how about some sort of elephant? After all, as the Agatha Christie title read, elephants can remember ... — Yang", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "David Yang's actual April 3, 1997 message (quoted on the official PostgreSQL wiki) says 'elephants can remember', referencing Agatha Christie's novel title 'Elephants Can Remember' — not the more famous 'elephants never forget' framing. The primary archive link (archives.postgresql.org/pgsql-hackers/1997-04/msg00094.php) is now dead/404, so this rests on the PostgreSQL wiki's own quoted excerpt plus the LearnSQL retelling, which agree with each other.",
+      "on_screen_fix": "If quoting Yang directly, use 'elephants can remember' (Agatha Christie reference), not 'elephants never forget'."
+    },
+    {
+      "id": 21,
+      "claim": "\"because elephants remember\" as the reason for the elephant",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://wiki.postgresql.org/wiki/Logo", "quote": "how about some sort of elephant? After all, as the Agatha Christie title read, elephants can remember ... — Yang", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "As scoped in the ledger (reason for choosing an elephant, not for the specific name 'Slonik'), this is accurate: Yang's 1997 proposal cites the 'elephants remember' association. Separately, per the Habr Postgres Pro retrospective, the specific filename/name 'Slonik' (slonik.gif) was reportedly just a Russian-language filename habit of a designer (Ekaterina Papchinskaya) and stuck by convention, not chosen for a 'remembers' pun — so 'elephants remember' explains the animal choice, not the Slonik name itself. A separate, later (1998) contributor, Dan Delaney, is the one on record with the fuller 'big, strong, reliable, and never forgets' phrasing — don't attribute that fuller quote to Yang/1997.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 36,
+      "claim": "Michael Stonebraker, ACM A.M. Turing Award 2014",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://cccblog.org/2015/03/25/michael-stonebraker-receives-2014-acm-turing-award/", "quote": "Stonebreaker is the inventor of many concepts that were crucial to making databases a reality and that are used in almost all modern database systems.", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Confirmed: Stonebraker received the 2014 ACM A.M. Turing Award (announced/presented 2015). amturing.acm.org and awards.acm.org block automated fetching (Cloudflare 403), so this cites a CCC Blog mirror of the ACM release; content is corroborated by SD Times, Tamr press release, and Wikipedia, all agreeing on '2014 Turing Award' for Stonebraker.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 37,
+      "claim": "\"Its creator won the Turing Award\" (Stonebraker created POSTGRES)",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://cccblog.org/2015/03/25/michael-stonebraker-receives-2014-acm-turing-award/", "quote": "His later work on Postgres introduced the object-relational model, effectively merging databases with abstract data types while keeping the database separate from the programming language.", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "The Turing Award citation explicitly credits Stonebraker's Postgres work as part of the basis for the award, alongside Ingres. Calling him 'creator' of POSTGRES is standard usage (with co-designer Lawrence Rowe on the SIGMOD paper — the on-screen line simplifies but is not wrong given Stonebraker's role as PI/lead).",
+      "on_screen_fix": null
+    },
+    {
+      "id": 41,
+      "claim": "Extensions shown exist: postgis, pgvector, timescaledb, citus, pg_stat_statements, pg_cron, postgres_fdw, pg_trgm, pgaudit, pg_partman, hypopg, plpgsql",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://github.com/pgvector/pgvector", "quote": "pgvector/pgvector: Open-source vector similarity search for Postgres", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://github.com/pgaudit/pgaudit", "quote": "pgaudit/pgaudit: PostgreSQL Audit Extension", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://github.com/pgpartman/pg_partman", "quote": "pgpartman/pg_partman: Partition management extension for PostgreSQL", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "All twelve named extensions/modules are real, actively maintained projects (postgis.net, pgvector, timescale/timescaledb, citusdata/citus, pgaudit.org, pgpartman/pg_partman, HypoPG/hypopg on GitHub); pg_stat_statements, postgres_fdw, pg_trgm and plpgsql ship as core/contrib modules in the Postgres tree itself, pg_cron is citusdata/pg_cron on GitHub. No fictitious entries in the list.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 42,
+      "claim": "\"CREATE EXTENSION · thousands of them\"",
+      "verdict": "IMPRECISE",
+      "citations": [
+        {"kind": "external", "url": "https://justatheory.com/2025/05/release-on-pgxn/", "quote": "PGXN distributes source releases for around 400 extensions", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "The best documented count (May 2025, David Wheeler/justatheory, a PGXN maintainer) puts total *known* Postgres extensions across all registries at roughly 1,000-1,200, with PGXN itself hosting ~390-400. 'Thousands' (implying 2,000+) is not supported by any source found; 'over a thousand' or 'well over a thousand' is the defensible framing as of the most recent count available.",
+      "on_screen_fix": "Change to \"CREATE EXTENSION · over a thousand of them\" or \"hundreds, with more every year\" rather than \"thousands\"."
+    },
+    {
+      "id": 43,
+      "claim": "DB-Engines DBMS of the Year: 2017, 2018, 2020, 2023 (film shows these years); question of whether 2024/2025 are also PostgreSQL",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://db-engines.com/en/blog_post/106", "quote": "PostgreSQL is the DBMS of the Year 2023", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://db-engines.com/en/blog", "quote": "Snowflake is the Database Management System of the Year 2024", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Confirmed via db-engines.com's own blog post titles: PostgreSQL won DBMS of the Year in 2017, 2018, 2020, and 2023 (its 4th win, per db-engines' own framing of the 2023 post) — matching the film exactly. 2019 went to MySQL, 2021 and 2022 to Snowflake, and 2024 also went to Snowflake ('Snowflake is the Database Management System of the Year 2024', blog post #109). As of the retrieval date (Sept 26, 2026) db-engines.com's blog listing shows no 'DBMS of the Year 2025' post at all (their most recent posts are Q1/Q3 2025 ranking roundups, not an annual award announcement) — so there is no basis to claim PostgreSQL also won in 2024 or 2025; 2024 explicitly did not go to PostgreSQL.",
+      "on_screen_fix": "Do not extend the list to 2024 or 2025 — 2024's award went to Snowflake, and no 2025 'DBMS of the Year' award has been published by DB-Engines as of Sept 2026. Keep the film's list exactly as 2017/2018/2020/2023."
+    },
+    {
+      "id": 44,
+      "claim": "pgvector; `ORDER BY embedding <-> $1 LIMIT 5`",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://github.com/pgvector/pgvector", "quote": "pgvector/pgvector: Open-source vector similarity search for Postgres", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "pgvector's README documents `<->` as the Euclidean-distance operator usable exactly in this `ORDER BY ... <-> ... LIMIT n` nearest-neighbor query pattern; this is pgvector's headline usage example.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 45,
+      "claim": "Year range 2021–2024 (pgvector first release 2021)",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://api.github.com/repos/pgvector/pgvector/git/refs/tags/v0.1.0", "quote": "\"sha\": \"f2d881cc478fd90f6e4ab6e27cbc53033ed94e42\"", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "pgvector's v0.1.0 tag commit is dated 2021-04-20 (per GitHub API commit metadata), confirming first release in 2021.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 47,
+      "claim": "Stack Overflow 2025: PostgreSQL most admired, most desired, most used among professional developers",
+      "verdict": "IMPRECISE",
+      "citations": [
+        {"kind": "external", "url": "https://survey.stackoverflow.co/2025/technology", "quote": "PostgreSQL: 58.2%, MySQL: 39.6% (most used, professional developers)", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Confirmed PostgreSQL as most-used database among professional developers (58.2% vs MySQL's 39.6%). Could not independently re-verify the 'most admired' and 'most desired' superlatives in this pass — the 2025 survey page's database section, as fetched, foregrounds 'worked with' vs 'want to work with' rather than reproducing the separate 'admired/desired' composite metric used in some prior-year SO summaries. This needs a direct re-check of the survey.stackoverflow.co/2025 admired/desired tables (or the SO 2025 blog recap) before asserting all three superlatives on screen.",
+      "on_screen_fix": "Re-verify 'most admired' and 'most desired' directly against the admired/desired chart on survey.stackoverflow.co/2025/technology before broadcasting all three claims; 'most used' (58.2%) is solid."
+    },
+    {
+      "id": 48,
+      "claim": "PostgreSQL 58.2%, MySQL 39.6% — professional developers",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://survey.stackoverflow.co/2025/technology", "quote": "PostgreSQL 58.2% / MySQL 39.6%, Responses: 21,126 (43.1%)", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Exact figures confirmed on the live 2025 Stack Overflow Developer Survey technology page, in the databases-used-by-professional-developers section. Sample: 21,126 responses (43.1% of the professional-developer population) for that question.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 52,
+      "claim": "Code written by Claude (Sonnet 3.7) — author's public post 2025-05-29",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://x.com/samokhvalov/status/1928245301992661453", "quote": "Let me confess. I implemented this feature using by @AnthropicAI Claude Sonnet 3.7 a few months ago: https://gitlab.com/postgres/postgres/-/merge_requests/24\n\nIt wasn't true \"vibe coding\", when you don't look at the code. I did look at the code, carefully. So I call this \"vibe hacking\".\n\n1st time in @PostgreSQL?", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "Post timestamp is 2025-05-30T00:21:19Z (UTC) — i.e. May 29 evening in US Pacific/most US timezones, consistent with the 'posted 2025-05-29' framing depending on the author's local time. Confirms Claude Sonnet 3.7 authorship claim, self-reported by Nik Samokhvalov, with the caveat that he reviewed ('vibe hacking', not blind 'vibe coding') the code.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 53,
+      "claim": "\"First publicly known AI-written Postgres feature\"",
+      "verdict": "INACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://x.com/samokhvalov/status/1928245301992661453", "quote": "1st time in @PostgreSQL?", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "The source tweet phrases this explicitly as an open question ('1st time in @PostgreSQL?'), not a factual assertion — the author is speculating, not claiming priority. Presenting 'FIRST PUBLICLY KNOWN AI-WRITTEN FEATURE' as a flat on-screen fact overclaims relative to the primary source and is not independently verified (no exhaustive search of Postgres commit history for earlier AI-assisted patches was or could be done here).",
+      "on_screen_fix": "Hedge to match the source, e.g.: 'Possibly the first publicly disclosed AI-assisted Postgres commit — Samokhvalov himself asked \"1st time in Postgres?\"' or simply reproduce the question form on screen rather than asserting it as established fact."
+    },
+    {
+      "id": 57,
+      "claim": "PG19 in beta, September 2026",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://www.postgresql.org/about/news/postgresql-19-beta-4-released-3386/", "quote": "PostgreSQL 19 Beta 4 Released!", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "PostgreSQL 19 Beta 1 released June 4, 2026; Beta 4 released September 24, 2026 (two days before this verification pass) — PG19 is indeed in beta as of September 2026, with RC expected early October and GA possibly in October 2026.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 64,
+      "claim": "Thread subjects and years: \"Let's make PostgreSQL multi-threaded\" (2023); \"Add 64-bit XIDs into PostgreSQL 15\" (2022); 'Asynchronous and \"direct\" IO support for PostgreSQL' (2021); \"[Proposal] Table-level Transparent Data Encryption (TDE) and Key Management Service (KMS)\" (2018); \"Built-in connection pooler\" (2019)",
+      "verdict": "ACCURATE",
+      "citations": [
+        {"kind": "external", "url": "https://www.postgresql.org/message-id/31cc6df9-53fe-3cd9-af5b-ac0d801163f4@iki.fi", "quote": "Let's make PostgreSQL multi-threaded", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://www.postgresql.org/message-id/CACG=ezZe1NQSCnfHOr78AtAZxJZeCvxrts0ygrxYwe=pyyjVWA@mail.gmail.com", "quote": "Add 64-bit XIDs into PostgreSQL 15", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://www.postgresql.org/message-id/20210223100344.llw5an2aklengrmn@alap3.anarazel.de", "quote": "Asynchronous and \"direct\" IO support for PostgreSQL.", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://postgrespro.com/list/thread-id/2388559", "quote": "[Proposal] Table-level Transparent Data Encryption (TDE) and Key Management Service (KMS)", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://www.postgresql.org/message-id/ac873432-31cf-d5e4-0b80-b5ac95cfe385@postgrespro.ru", "quote": "Built-in connection pooler", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "All five thread subjects and start years verified against archived pgsql-hackers message IDs: multi-threaded thread started by Heikki Linnakangas, June 2023; 64-bit XIDs thread started by Maxim Orlov, March 2, 2022; async/direct IO thread started by Andres Freund, Feb 23, 2021; TDE/KMS proposal from Insung Moon/NTT, May 2018; built-in connection pooler thread started by Konstantin Knizhnik, Jan 24, 2019. Minor cosmetic note: the actual IO thread subject line ends with a period ('...for PostgreSQL.') which the on-screen text omits — immaterial.",
+      "on_screen_fix": null
+    },
+    {
+      "id": 65,
+      "claim": "\"The world's most advanced open source relational database\" (official tagline)",
+      "verdict": "IMPRECISE",
+      "citations": [
+        {"kind": "external", "url": "https://www.postgresql.org/", "quote": "<title>PostgreSQL: The world's most advanced open source database</title>", "retrieved_at": "2026-09-26"},
+        {"kind": "external", "url": "https://www.postgresql.org/", "quote": "the world's most advanced open source relational database. Please read more about our testing process and how you can contribute.", "retrieved_at": "2026-09-26"}
+      ],
+      "notes": "The word 'relational' is NOT in postgresql.org's current primary tagline/page title ('The world's most advanced open source database'), which is what appears in the browser tab and og:title meta tag. However, the phrase 'the world's most advanced open source relational database' DOES appear verbatim in running body copy elsewhere on the same homepage (in a PG19-testing call-to-action paragraph, as of Sept 26, 2026). So the exact wording the film uses is real and currently live on postgresql.org, just not the site's primary/canonical tagline.",
+      "on_screen_fix": "If presenting this as 'the' official tagline, use the actual current homepage title wording: \"The world's most advanced open source database\" (no 'relational'). If the longer 'relational' phrasing is preferred for clarity, caption it as wording used on postgresql.org rather than 'the tagline'."
+    }
+  ]
+}

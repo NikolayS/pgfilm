@@ -1,0 +1,6 @@
+node_modules/
+build/
+**/assets/fonts/
+*.mp4
+*.wav
+.DS_Store

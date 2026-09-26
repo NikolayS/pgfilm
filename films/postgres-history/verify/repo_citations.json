@@ -1,0 +1,1491 @@
+[
+  {
+    "claim_id": 11,
+    "scene": "types",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "doc/src/sgml/history.sgml",
+      "line_start": 48,
+      "line_end": 56,
+      "quote": "was released to a few external users in\n   June 1989.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 12,
+    "scene": "types",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@d31084e9d1",
+      "commit_sha": "d31084e9d1118b25fd16580d9d8c2924b5740dff",
+      "path": "src/backend/commands/define.c",
+      "line_start": 422,
+      "line_end": 429,
+      "quote": "DefineType --\n *\tRegisters a new type.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Extensible-types claim; supported jointly with rules (rewriteDefine.c, same commit), no-overwrite storage (REL7_1_3 vacuum.c) and time travel (REL7_1_3 contrib/spi/README.spi) citations below."
+  },
+  {
+    "claim_id": "12b",
+    "scene": "types",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@d31084e9d1",
+      "commit_sha": "d31084e9d1118b25fd16580d9d8c2924b5740dff",
+      "path": "src/backend/rewrite/rewriteDefine.c",
+      "line_start": 1,
+      "line_end": 5,
+      "quote": "routines for defining a rewrite rule",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "12c",
+    "scene": "types",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL7_1_3",
+      "commit_sha": "8c78169c4a766376317b2255572820dfcc52470e",
+      "path": "src/backend/commands/vacuum.c",
+      "line_start": 2260,
+      "line_end": 2264,
+      "quote": "We violate no-overwrite semantics here by storing new",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "12d",
+    "scene": "types",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL7_1_3",
+      "commit_sha": "8c78169c4a766376317b2255572820dfcc52470e",
+      "path": "contrib/spi/README.spi",
+      "line_start": 41,
+      "line_end": 44,
+      "quote": "timetravel.c - functions for implementing time travel feature.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 10,
+    "scene": "post",
+    "verdict": "UNSUPPORTED",
+    "corrected_wording": "Keep the claim, but cite postgresql.org/docs/current/history.html (or general Postgres lore) instead of the git repo -- the repo's doc/src/sgml/history.sgml never uses the phrase \"post-Ingres\" anywhere in its text.",
+    "citation": null,
+    "mechanical_check": "N/A",
+    "note": "git grep -ni 'post-ingres|post ingres|postingres' across the whole HEAD tree returns zero hits. history.sgml explains POSTGRES came out of the Ingres lineage/Berkeley project but never spells out the post-Ingres etymology. Not repo-verifiable; needs an external (postgresql.org or Stonebraker interview) citation."
+  },
+  {
+    "claim_id": 14,
+    "scene": "pg95",
+    "verdict": "IMPRECISE",
+    "corrected_wording": "In 1994, Andrew Yu and Jolly Chen added SQL to POSTGRES, and it was released to the world as Postgres95.",
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "doc/src/sgml/history.sgml",
+      "line_start": 100,
+      "line_end": 107,
+      "quote": "In 1994, Andrew Yu and Jolly Chen added an SQL language interpreter\n   to",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Repo confirms the 1994 date for adding SQL (Yu & Chen) via history.sgml. The '1995' Postgres95 public-release year is NOT verifiable from this repo: the git history begins at commit d31084e9 (1996-07-09, already tagged '1.01'), so no in-repo evidence pins the original 1995 release date. Keep '1994' as repo-sourced; source '1995' externally (postgresql.org history page / Postgres95 announcement) if kept on screen."
+  },
+  {
+    "claim_id": 16,
+    "scene": "release",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@d31084e9d1",
+      "commit_sha": "d31084e9d1118b25fd16580d9d8c2924b5740dff",
+      "path": "(commit metadata)",
+      "line_start": 1,
+      "line_end": 1,
+      "quote": "Postgres95 1.01 Distribution - Virgin Sources",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "git log --reverse shows d31084e9d1118b25fd16580d9d8c2924b5740dff as the first commit: author Marc G. Fournier <scrappy@hub.org>, author date 1996-07-09, subject 'Postgres95 1.01 Distribution - Virgin Sources'. Verified via `git show -s --format='%H|%an|%ae|%ad|%s' --date=format:'%Y-%m-%d' d31084e9d1118b25fd16580d9d8c2924b5740dff`."
+  },
+  {
+    "claim_id": 18,
+    "scene": "license",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "COPYRIGHT",
+      "line_start": 8,
+      "line_end": 11,
+      "quote": "Permission to use, copy, modify, and distribute this software and its\ndocumentation for any purpose, without fee, and without a written agreement\nis hereby granted, provided that the above copyright notice and this\nparagraph and the following two paragraphs appear in all copies.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 22,
+    "scene": "tomlane",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@502769d0de",
+      "commit_sha": "502769d0deea2c29276230eb65ac0eae86450280",
+      "path": "(commit metadata)",
+      "line_start": 1,
+      "line_end": 1,
+      "quote": "Change HPUX loader flags to trap null pointer derefs",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "`git log --author='Tom Lane' --reverse --format='%H|%ad|%s' --date=format:'%Y-%m-%d'` on HEAD (1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4, 2026-08-27) gives first row 502769d0deea2c29276230eb65ac0eae86450280|1998-10-01|Change HPUX loader flags to trap null pointer derefs."
+  },
+  {
+    "claim_id": 26,
+    "scene": "mvcc",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL7_0_2",
+      "commit_sha": "e261306b439e8286f8e8d7dcb6871c485df581c8",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 819,
+      "line_end": 823,
+      "quote": "Multi-version concurrency control(MVCC)",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "26b",
+    "scene": "mvcc",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL7_0_2",
+      "commit_sha": "e261306b439e8286f8e8d7dcb6871c485df581c8",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 805,
+      "line_end": 805,
+      "quote": "1999-06-09",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Release 6.5 date. Author attribution: contemporaneous release.sgml credits 'Vadim' throughout the 6.5 section for MVCC-related items (e.g. later branches show 'Multi-version concurrency control/MVCC(Vadim)')."
+  },
+  {
+    "claim_id": 27,
+    "scene": "mvcc",
+    "verdict": "IMPRECISE",
+    "corrected_wording": "Readers never block writers, and writers never block readers.",
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "doc/src/sgml/mvcc.sgml",
+      "line_start": 61,
+      "line_end": 62,
+      "quote": "reading never blocks writing and writing never blocks reading.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Doc states BOTH directions; on-screen claim as drafted ('Readers never block writers') states only one half of the guarantee and omits that writers also never block readers."
+  },
+  {
+    "claim_id": 28,
+    "scene": "wal",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL7_1_1",
+      "commit_sha": "ed6586063813cb4c9263254bb60b514cd12427e9",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 71,
+      "line_end": 71,
+      "quote": "2001-04-13",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "28b",
+    "scene": "wal",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL7_1_1",
+      "commit_sha": "ed6586063813cb4c9263254bb60b514cd12427e9",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 93,
+      "line_end": 116,
+      "quote": "Write-ahead Log (WAL)",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 29,
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_0_0",
+      "commit_sha": "c22b7eccd368754ea96865c046764382ab05db4b",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 13,
+      "line_end": 13,
+      "quote": "2005-01-19",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "29b",
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_0_0",
+      "commit_sha": "c22b7eccd368754ea96865c046764382ab05db4b",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 25,
+      "line_end": 25,
+      "quote": "Microsoft Windows Native Server",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "29c",
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_0_0",
+      "commit_sha": "c22b7eccd368754ea96865c046764382ab05db4b",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 65,
+      "line_end": 65,
+      "quote": "Savepoints",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "29d",
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_0_0",
+      "commit_sha": "c22b7eccd368754ea96865c046764382ab05db4b",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 83,
+      "line_end": 83,
+      "quote": "Point-In-Time Recovery",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 30,
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_1_0",
+      "commit_sha": "2a80c3c4dc56a44a26805c889ef71b614e769266",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 23,
+      "line_end": 23,
+      "quote": "2005-11-08",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "30b",
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_1_0",
+      "commit_sha": "2a80c3c4dc56a44a26805c889ef71b614e769266",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 81,
+      "line_end": 81,
+      "quote": "Add two-phase commit",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "30c",
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_1_0",
+      "commit_sha": "2a80c3c4dc56a44a26805c889ef71b614e769266",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 171,
+      "line_end": 171,
+      "quote": "Move",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 31,
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_3_0",
+      "commit_sha": "9e647a13872a5f34dc0009566925c5c352463780",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 71,
+      "line_end": 71,
+      "quote": "2008-02-04",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "31b",
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_3_0",
+      "commit_sha": "9e647a13872a5f34dc0009566925c5c352463780",
+      "path": "doc/src/sgml/release.sgml",
+      "line_start": 202,
+      "line_end": 203,
+      "quote": "Heap-Only Tuples (<acronym>HOT</>) accelerate space reuse for",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 32,
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_4_0",
+      "commit_sha": "4d53a2f9699547bdc12831d2860c9d44c465e805",
+      "path": "doc/src/sgml/release-8.4.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2009-07-01",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "32b",
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_4_0",
+      "commit_sha": "4d53a2f9699547bdc12831d2860c9d44c465e805",
+      "path": "doc/src/sgml/release-8.4.sgml",
+      "line_start": 29,
+      "line_end": 29,
+      "quote": "Windowing Functions",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "32c",
+    "scene": "montage",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL8_4_0",
+      "commit_sha": "4d53a2f9699547bdc12831d2860c9d44c465e805",
+      "path": "doc/src/sgml/release-8.4.sgml",
+      "line_start": 35,
+      "line_end": 35,
+      "quote": "Common Table Expressions and Recursive Queries",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 33,
+    "scene": "replicas",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL9_0_0",
+      "commit_sha": "861861edcc04a6e3ebdfe363311f122e2b226196",
+      "path": "doc/src/sgml/release-9.0.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2010-09-20",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "33b",
+    "scene": "replicas",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL9_0_0",
+      "commit_sha": "861861edcc04a6e3ebdfe363311f122e2b226196",
+      "path": "doc/src/sgml/release-9.0.sgml",
+      "line_start": 33,
+      "line_end": 38,
+      "quote": "Streaming Replication, allowing continuous archive",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 34,
+    "scene": "json",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL9_2_0",
+      "commit_sha": "ef47adb414e46099155c34529a2a5caeea02fc41",
+      "path": "doc/src/sgml/release-9.2.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2012-09-10",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "34b",
+    "scene": "json",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL9_2_0",
+      "commit_sha": "ef47adb414e46099155c34529a2a5caeea02fc41",
+      "path": "doc/src/sgml/release-9.2.sgml",
+      "line_start": 84,
+      "line_end": 87,
+      "quote": "Add a <link linkend=\"datatype-json\"><type>JSON</type></link>\n        data type",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "34c",
+    "scene": "json",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL9_4_0",
+      "commit_sha": "8ca336f4ac3f08a5f23e76c6e9a5f2c8064f5883",
+      "path": "doc/src/sgml/release-9.4.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2014-12-18",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "34d",
+    "scene": "json",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL9_4_0",
+      "commit_sha": "8ca336f4ac3f08a5f23e76c6e9a5f2c8064f5883",
+      "path": "doc/src/sgml/release-9.4.sgml",
+      "line_start": 25,
+      "line_end": 26,
+      "quote": "Add <link linkend=\"datatype-json\"><type>jsonb</></link>, a more",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "39b",
+    "scene": "ten",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_10_0",
+      "commit_sha": "5df0e99bea1c3e5fbffa7fbd0982da88ea149bb6",
+      "path": "doc/src/sgml/release-10.sgml",
+      "line_start": 20,
+      "line_end": 24,
+      "quote": "Logical replication using publish/subscribe",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "39c",
+    "scene": "ten",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_10_0",
+      "commit_sha": "5df0e99bea1c3e5fbffa7fbd0982da88ea149bb6",
+      "path": "doc/src/sgml/libpq.sgml",
+      "line_start": 1865,
+      "line_end": 1868,
+      "quote": "Prior to major version 10, <productname>PostgreSQL</> used\n       three-part version numbers",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-12-date",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_12_0",
+      "commit_sha": "ad1f2885b8c82e0c2d56d7974f012cbecce17a17",
+      "path": "doc/src/sgml/release-12.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2019-10-03",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-13-date",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_13_0",
+      "commit_sha": "29be9983a64c011eac0b9ee29895cce71e15ea77",
+      "path": "doc/src/sgml/release-13.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2020-09-24",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-14-date",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_14_0",
+      "commit_sha": "86a4dc1e6f29d1992a2afa3fac1a0b0a6e84568c",
+      "path": "doc/src/sgml/release-14.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2021-09-30",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-16-date",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_16_0",
+      "commit_sha": "c372fbbd8e911f2412b80a8c39d7079366565d67",
+      "path": "doc/src/sgml/release-16.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2023-09-14",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-17-date",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_17_0",
+      "commit_sha": "d7ec59a63d745ba74fba0e280bbf85dc6d1caa3e",
+      "path": "doc/src/sgml/release-17.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2024-09-26",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-18-date",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_18_0",
+      "commit_sha": "3d6a828938a5fa0444275d3d2f67b64ec3199eb7",
+      "path": "doc/src/sgml/release-18.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2025-09-25",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-18-feat",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_18_0",
+      "commit_sha": "3d6a828938a5fa0444275d3d2f67b64ec3199eb7",
+      "path": "doc/src/sgml/release-18.sgml",
+      "line_start": 38,
+      "line_end": 38,
+      "quote": "Support for \"skip scan\" lookups",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 39,
+    "scene": "ten",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_10_0",
+      "commit_sha": "5df0e99bea1c3e5fbffa7fbd0982da88ea149bb6",
+      "path": "doc/src/sgml/release-10.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2017-10-05",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "39d",
+    "scene": "ten",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_10_0",
+      "commit_sha": "5df0e99bea1c3e5fbffa7fbd0982da88ea149bb6",
+      "path": "doc/src/sgml/release-10.sgml",
+      "line_start": 23,
+      "line_end": 23,
+      "quote": "Logical replication using publish/subscribe",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-12-feat",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_12_0",
+      "commit_sha": "ad1f2885b8c82e0c2d56d7974f012cbecce17a17",
+      "path": "doc/src/sgml/release-12.sgml",
+      "line_start": 122,
+      "line_end": 122,
+      "quote": "generated columns",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-15-date",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_15_0",
+      "commit_sha": "2a7ce2e2ce474504a707ec03e128fde66cfb8b48",
+      "path": "doc/src/sgml/release-15.sgml",
+      "line_start": 6,
+      "line_end": 6,
+      "quote": "2022-10-13",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-13-feat",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_13_0",
+      "commit_sha": "29be9983a64c011eac0b9ee29895cce71e15ea77",
+      "path": "doc/src/sgml/release-13.sgml",
+      "line_start": 491,
+      "line_end": 493,
+      "quote": "More efficiently store <link\n        linkend=\"btree-deduplication\">duplicates</link> in B-tree indexes",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-14-feat",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_14_0",
+      "commit_sha": "86a4dc1e6f29d1992a2afa3fac1a0b0a6e84568c",
+      "path": "doc/src/sgml/release-14.sgml",
+      "line_start": 84,
+      "line_end": 84,
+      "quote": "<application>libpq</application> now has the ability to pipeline",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-16-feat",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_16_0",
+      "commit_sha": "c372fbbd8e911f2412b80a8c39d7079366565d67",
+      "path": "doc/src/sgml/release-16.sgml",
+      "line_start": 1682,
+      "line_end": 1684,
+      "quote": "Allow <link linkend=\"logicaldecoding\">logical decoding</link>\n       on standbys",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-17-feat-json",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_17_0",
+      "commit_sha": "d7ec59a63d745ba74fba0e280bbf85dc6d1caa3e",
+      "path": "doc/src/sgml/release-17.sgml",
+      "line_start": 32,
+      "line_end": 32,
+      "quote": "JSON_TABLE()",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "40-17-feat-incbackup",
+    "scene": "montage2",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_17_0",
+      "commit_sha": "d7ec59a63d745ba74fba0e280bbf85dc6d1caa3e",
+      "path": "doc/src/sgml/release-17.sgml",
+      "line_start": 85,
+      "line_end": 85,
+      "quote": "now supports incremental backup.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 50,
+    "scene": "aicode",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@cd3c45125d",
+      "commit_sha": "cd3c45125d2d92e86ad7530b162562a23d063c26",
+      "path": "(commit metadata + message)",
+      "line_start": 1,
+      "line_end": 3,
+      "quote": "pg_dump, pg_dumpall, pg_restore: Add --no-policies option.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "git show -s --format='%H|%ad' --date=format:'%Y-%m-%d' cd3c45125d2d92e86ad7530b162562a23d063c26 => cd3c45125d2d92e86ad7530b162562a23d063c26|2025-03-16. Subject line: 'pg_dump, pg_dumpall, pg_restore: Add --no-policies option.' Confirmed present in REL_18_0 (3d6a828938a5fa0444275d3d2f67b64ec3199eb7) via src/bin/pg_dump/pg_dump.c line 513 option table entry."
+  },
+  {
+    "claim_id": 51,
+    "scene": "aicode",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@cd3c45125d",
+      "commit_sha": "cd3c45125d2d92e86ad7530b162562a23d063c26",
+      "path": "(commit message trailer + raw commit object)",
+      "line_start": 1,
+      "line_end": 2,
+      "quote": "author Tom Lane <tgl@sss.pgh.pa.us>",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "git cat-file -p cd3c45125d2d92e86ad7530b162562a23d063c26 shows git 'author' AND 'committer' fields are both Tom Lane <tgl@sss.pgh.pa.us> (standard Postgres practice: the person who applies/commits a patch is recorded as git author+committer). The commit message BODY explicitly credits the true patch author via trailer: 'Author: Nikolay Samokhvalov <nik@postgres.ai>'. So 'Author Nikolay Samokhvalov, committed by Tom Lane' is the correct, idiomatic Postgres-community reading of this commit (author-in-message-trailer vs. committer-in-git-metadata), matching the ledger's evidence hint ('commit trailer / committer field')."
+  },
+  {
+    "claim_id": "54a",
+    "scene": "aicode",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_18_0",
+      "commit_sha": "3d6a828938a5fa0444275d3d2f67b64ec3199eb7",
+      "path": "src/bin/pg_dump/pg_dump.c",
+      "line_start": 1313,
+      "line_end": 1313,
+      "quote": "do not dump row security policies",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "54b",
+    "scene": "aicode",
+    "verdict": "INACCURATE",
+    "corrected_wording": "do not restore row security policies",
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_18_0",
+      "commit_sha": "3d6a828938a5fa0444275d3d2f67b64ec3199eb7",
+      "path": "src/bin/pg_dump/pg_restore.c",
+      "line_start": 563,
+      "line_end": 563,
+      "quote": "do not restore row security policies",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "On-screen claim as drafted says the restore help string reads 'do not restore row level security policies' -- the actual --help text in pg_restore.c (and pg_dumpall.c) is 'do not restore row security policies' (no 'level'), mirroring the dump-side string exactly. Drop the word 'level' from the on-screen restore string."
+  },
+  {
+    "claim_id": 55,
+    "scene": "aio",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_18_0",
+      "commit_sha": "3d6a828938a5fa0444275d3d2f67b64ec3199eb7",
+      "path": "doc/src/sgml/release-18.sgml",
+      "line_start": 9,
+      "line_end": 9,
+      "quote": "2025-09-25",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "55b",
+    "scene": "aio",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_18_0",
+      "commit_sha": "3d6a828938a5fa0444275d3d2f67b64ec3199eb7",
+      "path": "doc/src/sgml/release-18.sgml",
+      "line_start": 24,
+      "line_end": 24,
+      "quote": "An asynchronous I/O (AIO) subsystem",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "55c",
+    "scene": "aio",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_18_0",
+      "commit_sha": "3d6a828938a5fa0444275d3d2f67b64ec3199eb7",
+      "path": "doc/src/sgml/release-18.sgml",
+      "line_start": 46,
+      "line_end": 46,
+      "quote": "uuidv7()",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 56,
+    "scene": "aio",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_18_0",
+      "commit_sha": "3d6a828938a5fa0444275d3d2f67b64ec3199eb7",
+      "path": "doc/src/sgml/config.sgml",
+      "line_start": 2752,
+      "line_end": 2771,
+      "quote": "io_uring</literal> (execute asynchronous I/O using",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 57,
+    "scene": "pg19",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_19_STABLE@b73d13c32c",
+      "commit_sha": "b73d13c32c834a2c8e1c60cb92f79530376cedf1",
+      "path": "(commit metadata)",
+      "line_start": 1,
+      "line_end": 1,
+      "quote": "Stamp 19beta4.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "git log upstream/REL_19_STABLE -1 --format='%H %ad %s' --date=short => b73d13c32c834a2c8e1c60cb92f79530376cedf1 2026-09-21 'Stamp 19beta4.' Confirms PostgreSQL 19 was in beta (beta4) as of September 2026, matching the claim. Note: this ref is from the 'upstream' remote, not 'origin' (origin does not yet carry REL_19_STABLE in this checkout)."
+  },
+  {
+    "claim_id": "58-repack",
+    "scene": "pg19",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_19_STABLE@b73d13c32c",
+      "commit_sha": "b73d13c32c834a2c8e1c60cb92f79530376cedf1",
+      "path": "doc/src/sgml/release-19.sgml",
+      "line_start": 22,
+      "line_end": 27,
+      "quote": "A new <link linkend=\"sql-repack\"><command>REPACK</command></link> command",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "58-seqrepl",
+    "scene": "pg19",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_19_STABLE@b73d13c32c",
+      "commit_sha": "b73d13c32c834a2c8e1c60cb92f79530376cedf1",
+      "path": "doc/src/sgml/release-19.sgml",
+      "line_start": 33,
+      "line_end": 36,
+      "quote": "Logical replication now\n      <link linkend=\"logical-replication-sequences\">replicates sequence values</link>",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "58-wait",
+    "scene": "pg19",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_19_STABLE@b73d13c32c",
+      "commit_sha": "b73d13c32c834a2c8e1c60cb92f79530376cedf1",
+      "path": "doc/src/sgml/ref/wait.sgml",
+      "line_start": 23,
+      "line_end": 24,
+      "quote": "WAIT FOR LSN '<replaceable class=\"parameter\">lsn</replaceable>'",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "On-screen 'WAIT FOR LSN' matches the literal SQL syntax (refsynopsisdiv) even though the command's formal name is just WAIT."
+  },
+  {
+    "claim_id": "58-parallelav",
+    "scene": "pg19",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_19_STABLE@b73d13c32c",
+      "commit_sha": "b73d13c32c834a2c8e1c60cb92f79530376cedf1",
+      "path": "doc/src/sgml/release-19.sgml",
+      "line_start": 40,
+      "line_end": 44,
+      "quote": "Autovacuum can now use\n      <link linkend=\"guc-autovacuum-max-parallel-workers\">parallel worker processes</link>",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": "58-planadvice",
+    "scene": "pg19",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "REL_19_STABLE@b73d13c32c",
+      "commit_sha": "b73d13c32c834a2c8e1c60cb92f79530376cedf1",
+      "path": "doc/src/sgml/release-19.sgml",
+      "line_start": 60,
+      "line_end": 63,
+      "quote": "pg_plan_advice</application></link>\n      extension for stabilizing and controlling the query planner",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": null
+  },
+  {
+    "claim_id": 59,
+    "scene": "commits",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "(derived: git log --oneline | wc -l)",
+      "line_start": 1,
+      "line_end": 1,
+      "quote": "65196",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Command: `git log --oneline | wc -l` on HEAD=1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4 (2026-08-27) => 65196. First commit d31084e9d1118b25fd16580d9d8c2924b5740dff is dated 1996-07-09 (see claim 16). 2026 - 1996 = 30, so 'thirty years' since 1996-07-09 is accurate as of both the HEAD date (2026-08-27) and today (2026-09-26)."
+  },
+  {
+    "claim_id": 60,
+    "scene": "commits",
+    "verdict": "ACCURATE (reference dataset; verify final on-screen numbers against this table)",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "(derived: git log --format='%ad' --date=format:'%Y' | sort | uniq -c)",
+      "line_start": 1,
+      "line_end": 31,
+      "quote": "{\"1996\": 876, \"1997\": 1698, \"1998\": 1744, \"1999\": 1788, \"2000\": 2535, \"2001\": 3061, \"2002\": 2654, \"2003\": 2416, \"2004\": 2548, \"2005\": 2419, \"2006\": 2152, \"2007\": 2188, \"2008\": 1652, \"2009\": 1388, \"2010\": 1801, \"2011\": 2029, \"2012\": 1605, \"2013\": 1368, \"2014\": 1745, \"2015\": 1817, \"2016\": 2086, \"2017\": 2469, \"2018\": 2122, \"2019\": 2130, \"2020\": 2179, \"2021\": 2276, \"2022\": 2485, \"2023\": 2210, \"2024\": 2722, \"2025\": 2816, \"2026\": 2217}",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Per-year commit counts on HEAD=1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4 (2026-08-27), by author-date year, counting merge and non-merge commits together as they appear in `git log` on this branch. 2026 is a partial year (through 2026-08-27/checkout date). The ledger did not specify exact numbers shown on screen, so this dataset is provided as ground truth for the video's chart -- whoever builds the chart should match these values (or recompute with `git log --format='%ad' --date=format:'%Y' | sort | uniq -c` at final HEAD before render)."
+  },
+  {
+    "claim_id": 61,
+    "scene": "people",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "(derived: git shortlog -sn HEAD)",
+      "line_start": 1,
+      "line_end": 30,
+      "quote": "[[\"Tom Lane\", 16871], [\"Bruce Momjian\", 14113], [\"Peter Eisentraut\", 6569], [\"Robert Haas\", 2619], [\"Michael Paquier\", 2576], [\"Alvaro Herrera\", 2214], [\"Heikki Linnakangas\", 1923], [\"Andres Freund\", 1551], [\"Marc G. Fournier\", 1491], [\"Thomas G. Lockhart\", 1078], [\"Andrew Dunstan\", 1006], [\"Magnus Hagander\", 928], [\"Fujii Masao\", 813], [\"Michael Meskes\", 766], [\"Amit Kapila\", 714], [\"Thomas Munro\", 642], [\"Neil Conway\", 616], [\"David Rowley\", 598], [\"Noah Misch\", 555], [\"Peter Geoghegan\", 525], [\"Alexander Korotkov\", 521], [\"Vadim B. Mikheev\", 519], [\"Daniel Gustafsson\", 507], [\"Nathan Bossart\", 471], [\"Simon Riggs\", 453], [\"Tatsuo Ishii\", 453], [\"Jeff Davis\", 436], [\"Teodor Sigaev\", 399], [\"Tomas Vondra\", 367], [\"Stephen Frost\", 279]]",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Command: `git shortlog -sn HEAD` on HEAD=1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4 (2026-08-27). Output's top 30 rows match the claim exactly, including endpoints Tom Lane=16871 and Stephen Frost=279 at rank 30. Note: shortlog groups by the literal git author-name string, so this does not merge any name variants/aliases a given person may have committed under."
+  },
+  {
+    "claim_id": 62,
+    "scene": "people",
+    "verdict": "IMPRECISE",
+    "corrected_wording": "1996-97 core team: Fournier, Momjian, Mikheev, Lockhart (drop the specific year '1996' for Lockhart, or broaden to '1996-97').",
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "(derived: git log --author=<name> --reverse --format='%ad %s' --date=short | head -1, per name)",
+      "line_start": 1,
+      "line_end": 4,
+      "quote": "Fournier 1996-07-09; Momjian 1996-09-25; Mikheev 1996-10-18; Lockhart 1997-04-27",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Codd/Stonebraker/Wong/Rowe (pioneers) and Yu/Chen (Postgres95) are not repo-verifiable (pre-date the git history) -- see history.sgml (claims 1-14) for those names instead. For the '1996 core' foursome, per-author first-commit dates on HEAD are: Marc G. Fournier 1996-07-09 (the actual first commit, see claim 16), Bruce Momjian 1996-09-25, Vadim B. Mikheev 1996-10-18, Thomas G. Lockhart 1997-04-27. Lockhart's first commit is in 1997, not 1996, so grouping him under an on-screen '1996 core' team is imprecise by about 7 months; all four are genuinely part of the earliest (1996-97) committer group per `git shortlog` (claim 61)."
+  },
+  {
+    "claim_id": 65,
+    "scene": "end",
+    "verdict": "UNSUPPORTED",
+    "corrected_wording": "Either cite postgresql.org (the tagline 'The World's Most Advanced Open Source Relational Database' is the site's own marketing copy, not repo text), or change the on-screen text to match what's actually in the repo: 'the most advanced open-source database available anywhere' (doc/src/sgml/history.sgml) or 'an advanced object-relational database management system' (README.md).",
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "doc/src/sgml/history.sgml",
+      "line_start": 15,
+      "line_end": 17,
+      "quote": "development behind it, <productname>PostgreSQL</productname> is now\n  the most advanced open-source database available anywhere.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "The exact on-screen tagline 'The world's most advanced open source relational database' does NOT appear verbatim anywhere in the repo. Closest repo text is history.sgml's 'the most advanced open-source database available anywhere' (missing 'world's' and 'relational') and README.md's 'PostgreSQL is an advanced object-relational database management system' (missing 'world's', 'most', and 'open source'). The familiar marketing tagline lives on postgresql.org, outside this repository, so it needs a non-repo citation if kept verbatim."
+  },
+  {
+    "claim_id": 23,
+    "scene": "tomlane",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "(derived: git shortlog -sn HEAD, Tom Lane row)",
+      "line_start": 1,
+      "line_end": 1,
+      "quote": "16871\tTom Lane",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Also cross-checked with `git log --author='Tom Lane' --oneline | wc -l` => 16871, on HEAD=1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4 (2026-08-27)."
+  },
+  {
+    "claim_id": 24,
+    "scene": "tomlane",
+    "verdict": "IMPRECISE",
+    "corrected_wording": "About one in every four commits (25.9%) is Tom Lane's -- keep the percentage on screen, or soften 'one in every four' to 'roughly a quarter' since 25.9% rounds slightly above exactly 1-in-4 (25.0%).",
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "(derived: 16871 / 65196 * 100)",
+      "line_start": 1,
+      "line_end": 1,
+      "quote": "25.877354438922634",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "16871/65196 = 25.877...% which the ledger rounds to 25.9% -- arithmetic is correct. 'One in every four' is a colloquial rounding of 25%, and 25.9% is close enough to be a reasonable simplification, so this is only a minor imprecision, not an error; keeping the explicit '25.9%' on screen alongside the phrase removes any ambiguity."
+  },
+  {
+    "claim_id": 25,
+    "scene": "tomlane",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "(commit metadata)",
+      "line_start": 1,
+      "line_end": 1,
+      "quote": "Allow an aggregate's planner support function to be set via CREATE AGGREGATE.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "git log --author='Tom Lane' -1 --format='%H|%ad|%s' --date=format:'%Y-%m-%d' on HEAD (2026-08-27, sha 1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4) => 8aa49d34e977affb21f3cdbf17661c9c64753f42|2026-08-23|Allow an aggregate's planner support function to be set via CREATE AGGREGATE. Tom Lane's most recent commit is 4 days before HEAD, so 'still committing' holds as of this checkout."
+  },
+  {
+    "claim_id": 15,
+    "scene": "pg95",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@d31084e9d1",
+      "commit_sha": "d31084e9d1118b25fd16580d9d8c2924b5740dff",
+      "path": "src/bin/monitor/monitor.c",
+      "line_start": 3,
+      "line_end": 4,
+      "quote": "POSTGRES Terminal Monitor",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "src/bin/monitor/monitor.c is present in the very first commit (d31084e9, 1996-07-09) as 'POSTGRES Terminal Monitor'."
+  },
+  {
+    "claim_id": "15b",
+    "scene": "pg95",
+    "verdict": "ACCURATE",
+    "corrected_wording": null,
+    "citation": {
+      "kind": "source",
+      "repo": "github.com/postgres/postgres",
+      "ref": "master@1051099a90",
+      "commit_sha": "1051099a9045fe4d6c81eeea33dcd24cd2ba7fd4",
+      "path": "doc/src/sgml/history.sgml",
+      "line_start": 135,
+      "line_end": 140,
+      "quote": "This largely superseded\n      the old <application>monitor</application> program.",
+      "verified_at": "2026-09-26T16:37:17Z",
+      "verification": "local-checkout-sha256"
+    },
+    "mechanical_check": "PASS",
+    "note": "Current history.sgml confirms psql 'largely superseded the old monitor program' when SQL was added in Postgres95."
+  }
+]
