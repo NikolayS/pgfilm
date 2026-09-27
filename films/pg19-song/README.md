@@ -1,6 +1,6 @@
 # PG19 song: "Must Be Reliable"
 
-**Status: in progress.**
+**Status: rendered, in review.** 3:28, 1080p30. QA (`qa/qa_report.md`): 45/45 lyric lines and 7/7 burst cards hold ≥ 0.5 s after full reveal; word-sync max error 0.89 frames (mean 0.26) over 310 words; 8/8 section cuts on the downbeat grid; 6245/6245 frames.
 
 A 3:28 lyric music video about PostgreSQL 19 and the year open source had in 2026. PostgreSQL shipped 44 CVE fixes in 2026, four betas, and reverted features rather than ship them shaky, because "first and foremost, PostgreSQL must be reliable."
 

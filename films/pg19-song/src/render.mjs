@@ -48,7 +48,9 @@ function background(c, th, s, t, e) {
 }
 
 function hud(c, th, s, t, f, ink) {
-  const col = ink || th.ink, dim = ink ? ink : th.dim, A = s.hudDim ? 0.35 : 1
+  const col = ink || th.ink, dim = ink ? ink : th.dim
+  const endFade = s.id === 'outro' ? 1 - clamp((t - (lineT0('11.1') + 2.6)) / 1.2) : 1   // ending: only the tiny COMMIT remains
+  const A = (s.hudDim ? 0.35 : 1) * endFade
   c.save(); c.globalAlpha = A * (s.id === 'intro' ? clamp((t - lineT0('0.3')) / 1.2) : 1)
   if (c.globalAlpha <= 0) { c.restore(); return }
   c.strokeStyle = dim; c.lineWidth = 1.5
@@ -57,14 +59,15 @@ function hud(c, th, s, t, f, ink) {
   mono(c, '§ ' + s.sec, 96, 116, 14, dim, { weight: 500, sp: 2, alpha: 0.8 })
   // CVE counter (the spine). Big version lives in the pre-chorus scenes.
   if (!s.counterBig) {
-    const cv = cveAt(t), frozen = s.sec === 'BRIDGE', fin = s.theme === 'light'
-    mono(c, 'POSTGRESQL CVEs · 2026' + (frozen ? '  ❚❚' : ''), W - 96, 92, 14, dim, { align: 'right', weight: 600, sp: 1 })
-    c.save(); font(c, 'mono', 64, 700); c.fillStyle = ink ? col : O; c.globalAlpha *= fin ? 0.45 : 1
-    if (!ink && th.dark && !frozen) { c.shadowColor = O; c.shadowBlur = 24 } const txt = String(cv.v); c.fillText(txt, W - 96 - mw(c, txt), 160); c.restore()
-    mono(c, 'as of ' + cv.asof, W - 96, 186, 13, dim, { align: 'right', alpha: 0.8 })
-    if (fin) { const oi = openItemsAt(t); mono(c, 'PG19 OPEN ITEMS', W - 300, 92, 14, dim, { align: 'right', weight: 600, sp: 1 })
-      c.save(); font(c, 'mono', 64, 700); c.fillStyle = th.acc; const s2 = String(oi); c.fillText(s2, W - 300 - mw(c, s2), 160); c.restore()
-      mono(c, '176 tracked · wiki 2026-09-26', W - 300, 186, 13, dim, { align: 'right', alpha: 0.8 }) }
+    const cv = cveAt(t), frozen = s.sec === 'BRIDGE', fin = s.theme === 'light' || s.id === 'outro'
+    mono(c, 'POSTGRESQL CVEs · 2026' + (frozen ? '  ❚❚' : ''), fin ? W - 420 : W - 96, 92, 14, dim, { align: 'right', weight: 600, sp: 1 })
+    const cx = fin ? W - 420 : W - 96   // final chorus: CVE counter steps left and dims; open items take the corner
+    c.save(); font(c, 'mono', 64, 700); c.fillStyle = ink ? col : O; c.globalAlpha *= fin ? 0.4 : 1
+    if (!ink && th.dark && !frozen) { c.shadowColor = O; c.shadowBlur = 24 } const txt = String(cv.v); c.fillText(txt, cx - mw(c, txt), 160); c.restore()
+    mono(c, 'as of ' + cv.asof, cx, 186, 13, dim, { align: 'right', alpha: 0.8 })
+    if (fin) { const oi = openItemsAt(t); mono(c, 'PG19 OPEN ITEMS', W - 96, 92, 14, dim, { align: 'right', weight: 600, sp: 1 })
+      c.save(); font(c, 'mono', 64, 700); c.fillStyle = th.acc; const s2 = String(oi); c.fillText(s2, W - 96 - mw(c, s2), 160); c.restore()
+      mono(c, '176 tracked · 9 open · wiki 2026-09-26', W - 96, 186, 13, dim, { align: 'right', alpha: 0.8 }) }
   }
   // progress bar with section ticks
   const x0 = 96, x1 = W - 96, y = H - 58
@@ -77,7 +80,7 @@ function hud(c, th, s, t, f, ink) {
   c.restore()
 }
 
-const small = new Canvas(480, 270), sx = small.getContext('2d')
+let small, sx   // recreated every frame (see frame())
 function post(c, th, s, t, f, e) {
   // bloom: blurred quarter-res copy, screened back (dark scenes only)
   if (th.dark && s.bg !== 'card') {
@@ -97,8 +100,13 @@ function post(c, th, s, t, f, e) {
 }
 
 function sceneAt(t) { for (const s of SCENES) if (t + 1e-6 >= fq(s.t0) && t < fq(s.t1) - 1e-6) return s; return SCENES[SCENES.length - 1] }
-const canvas = new Canvas(W, H), c = canvas.getContext('2d')
+// Fresh canvases every frame: skia-canvas records draw ops lazily, and the bloom pass (canvas → small → canvas) would
+// otherwise nest each frame's recording inside the next, making frame time grow exponentially.
+// CPU raster: deterministic, and parallel workers don't fight over Metal shader compilation.
+let canvas, c
+function fresh() { canvas = new Canvas(W, H); canvas.gpu = false; c = canvas.getContext('2d'); small = new Canvas(480, 270); small.gpu = false; sx = small.getContext('2d') }
 function frame(f) {
+  fresh()
   const t = f / FPS, s = sceneAt(t), th = THEMES[s.theme], e = energy(t)
   REC.f = f
   c.setTransform(1, 0, 0, 1, 0, 0); c.globalAlpha = 1; c.globalCompositeOperation = 'source-over'; c.shadowBlur = 0; c.shadowColor = 'transparent'; c.filter = 'none'
@@ -128,7 +136,7 @@ function timeline() {
   })
   const cards = []
   for (const s of SCENES) if (s.card) s.card.forEach((cd, i) => { const next = s.card[i + 1] ? fq(s.card[i + 1].t) : fq(s.t1)
-    const full = cd.split ? fq(cd.split) + 1 / FPS : fq(cd.t) + (cd.flash ? 2 / FPS : 0) + 1 / FPS
+    const full = cd.split != null ? fq(cd.split) + 1 / FPS : fq(cd.t) + (cd.flash ? 2 / FPS : 0) + 1 / FPS
     cards.push({ key: cd.key, words: cd.words.join('/'), show: fq(cd.t), full, removal: next, hold: +(next - full).toFixed(3) }) })
   return { fps: FPS, total: TOTAL, frames: NF, scenes: SCENES.map(s => ({ id: s.id, t0: s.t0, t1: s.t1, cutFrame: Math.round(s.t0 * FPS), sec: s.sec, theme: s.theme })), lines, cards }
 }
@@ -155,14 +163,20 @@ if (jobs > 1) {  // parallel: split into segments, render each in a child proces
   fs.writeFileSync(root + 'build/rec.json', JSON.stringify(rec)); console.log('done', out); process.exit(0)
 }
 const from = +(arg('--from') || 0), to = +(arg('--to') || NF), out = arg('--out') || root + 'build/video.mp4'
-const ff = spawn('ffmpeg', ['-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', `${W}x${H}`, '-r', String(FPS), '-i', '-',
-  '-c:v', 'libx264', '-preset', 'medium', '-crf', '16', '-pix_fmt', 'yuv420p', '-g', '60', out], { stdio: ['pipe', 'inherit', 'inherit'] })
+// Frames go to ffmpeg through a named FIFO: ffmpeg reads it with blocking I/O. (A Node stdin pipe can hand ffmpeg EAGAIN
+// when a worker starves it under parallel load, which the rawvideo demuxer turns into truncated frames.)
+const fifo = out + '.fifo'; try { fs.unlinkSync(fifo) } catch {}
+await new Promise((res, rej) => spawn('mkfifo', [fifo]).on('close', k => k ? rej(new Error('mkfifo')) : res()))
+const ff = spawn('ffmpeg', ['-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', `${W}x${H}`, '-r', String(FPS), '-i', fifo,
+  '-c:v', 'libx264', '-preset', 'medium', '-crf', '16', '-pix_fmt', 'yuv420p', '-g', '60', out], { stdio: ['ignore', 'inherit', 'inherit'] })
+const sink = fs.createWriteStream(fifo)
 REC.on = true
 const T0 = Date.now()
 for (let f = from; f < to; f++) {
   frame(f); const buf = await canvas.toBuffer('raw')
-  if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r))
+  if (!sink.write(buf)) await new Promise(r => sink.once('drain', r))
+  if (process.env.DBG) console.log('f', f, Date.now() - T0)
   if ((f - from) % 300 === 0) console.log(`[${from}-${to}] frame ${f}  ${((Date.now() - T0) / 1000).toFixed(0)}s`)
 }
-ff.stdin.end(); await new Promise(r => ff.on('close', r))
+await new Promise(r => sink.end(r)); await new Promise(r => ff.on('close', r)); fs.unlinkSync(fifo)
 if (arg('--rec')) fs.writeFileSync(arg('--rec'), JSON.stringify({ words: REC.words, marks: REC.marks }))

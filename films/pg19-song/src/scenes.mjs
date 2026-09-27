@@ -19,8 +19,8 @@ const widx = new Map(); { let i = 0; for (const id in LINES) for (const w of LIN
 const T5 = wordT('1.1', 0), T16 = wordT('1.2', 2), T44a = wordT('3.0', 0), T44b = lineEnd('3.0')
 export function cveAt(t) {
   if (t < T5) return { v: 0, asof: '2026-01-01' }
-  if (t < T16) return { v: Math.round(lerp(0, 5, easeOut((t - T5) / 0.35))), asof: '2026-02-12 · 18.2' }
-  if (t < T44a) return { v: Math.round(lerp(5, 16, easeOut((t - T16) / 0.5))), asof: '2026-05-14 · 18.4' }
+  if (t < T16) return { v: Math.round(lerp(0, 5, easeOut((t - T5) / 0.2))), asof: '2026-02-12 · 18.2' }
+  if (t < T44a) return { v: Math.round(lerp(5, 16, easeOut((t - T16) / 0.2))), asof: '2026-05-14 · 18.4' }
   return { v: Math.round(lerp(16, 44, ease((t - T44a) / (T44b - T44a)))), asof: '2026-08-13 · 18.6' }
 }
 const TF0 = lineT0('10.0'), TF1 = lineLast('10.7')
@@ -41,12 +41,13 @@ function isAcc(id, w) {
   if (w.w === 'Seven' && id !== '9.0') return false
   if (w.w === 'three' && id !== '4.3') return false
   if (w.w === 'Three' && id !== '10.4') return false
+  if (w.w === 'hundred' && id === '9.1') return false
   if (w.w === 'here' && id !== '10.5') return false
   if (w.w === 'still' && id !== '10.5') return false
   return ACC.has(w.w)
 }
 export const GROUPS = []
-function G(lines, t1, o) { const g = { lines, t0: lineT0(lines[0]), t1, stack: 2, style: 'grotesk', size: 62, x: 150, y: 930, align: 'left', maxW: 1500, ...o }; GROUPS.push(g); return g }
+function G(lines, t1, o) { const g = { lines, t0: lineT0(lines[0]), t1, stack: 2, style: 'grotesk', size: 62, x: 150, y: 985, align: 'left', maxW: 1500, ...o }; GROUPS.push(g); return g }
 function drawLine(c, th, id, g, t, x, y, alpha, size) {
   const ws = LINES[id]; font(c, g.style, size)
   const sp = size * (g.style === 'grotesk' ? 0.26 : g.style === 'mono' ? 0.6 : 0.28)
@@ -70,6 +71,9 @@ export function lyrics(c, th, t) {
   for (const g of GROUPS) {
     if (t < g.t0 - 0.001 || t >= g.t1) continue
     const started = g.lines.filter(id => t + 1e-6 >= fq(lineT0(id)))
+    if (g.scrim !== false && started.length) {  // lower-third band: soft scrim so captions never fight the picture
+      const sg = c.createLinearGradient(0, 770, 0, 900); const col = th.dark ? '11,10,9' : '241,232,213'
+      sg.addColorStop(0, `rgba(${col},0)`); sg.addColorStop(1, `rgba(${col},0.88)`); c.fillStyle = sg; c.fillRect(0, 770, W, 130); c.fillStyle = `rgba(${col},0.88)`; c.fillRect(0, 900, W, H - 900) }
     const vis = started.slice(-g.stack)
     let size = g.size
     font(c, g.style, size)
@@ -78,9 +82,8 @@ export function lyrics(c, th, t) {
     vis.forEach((id, i) => {
       const age = vis.length - 1 - i                   // 0 = current line
       const tNew = vis.length > 1 ? fq(lineT0(vis[vis.length - 1])) : -9
-      const slide = 1 - easeOut((t - tNew) / 0.22)
-      const y = g.y - age * lh + (age > 0 ? -slide * 0 + slide * lh * 0 : 0) + (age === 0 ? slide * lh * 0.35 : 0)
-      const alpha = age === 0 ? 1 : lerp(1, g.dimPrev ?? 0.32, easeOut((t - tNew) / 0.22))
+      const y = g.y - age * lh
+      const alpha = age === 0 ? 1 : lerp(0.6, g.dimPrev ?? 0.3, easeOut((t - tNew) / 0.12))
       const x = g.x
       if (g.box && age === 0) { c.save(); c.globalAlpha = 0.9; c.fillStyle = th.dark ? 'rgba(11,10,9,0.72)' : 'rgba(241,232,213,0.8)'; c.fillRect(x - 24, y - size * 0.95, g.maxW + 48, size * 1.35); c.restore() }
       drawLine(c, th, id, g, t, x, y, alpha * (g.alpha ?? 1), size)
@@ -129,13 +132,16 @@ export function psqlBox(c, th, t, n, t0, tRes, { x = 560, y = 250, rows = 0, res
 function strike(c, x1, x2, y, u, col, w = 4) { c.save(); c.strokeStyle = col; c.lineWidth = w; seg(c, x1, y, x2, y, easeOut(u)); c.restore() }
 function barChart(c, th, t, bars, { x0 = 560, y0 = 700, bw = 150, gap = 70, hmax = 420, vmax = 44 } = {}) {
   bars.forEach((b, i) => {
-    const u = easeOutBack(clamp((t - b.t) / 0.5)); if (t < b.t) return
+    if (t < b.t) return
+    const u = b.grow ? easeIn(clamp((t - b.t) / b.grow)) : easeOutBack(clamp((t - b.t) / 0.35))
     const hgt = hmax * b.v / vmax * u, x = x0 + i * (bw + gap)
     c.fillStyle = b.acc ? th.acc : th.ink; c.globalAlpha = b.acc ? 1 : 0.85
     if (b.acc && th.dark) { c.shadowColor = th.acc; c.shadowBlur = 30 }
     c.fillRect(x, y0 - hgt, bw, hgt); c.shadowBlur = 0; c.globalAlpha = 1
-    mono(c, String(Math.round(b.v * clamp(u))), x + bw / 2, y0 - hgt - 18, 34, b.acc ? th.acc : th.ink, { align: 'center', weight: 700 })
-    mono(c, b.label, x + bw / 2, y0 + 40, 22, th.dim, { align: 'center', weight: 600 })
+    const ly = Math.max(b.acc ? 330 : 120, y0 - hgt - 24)
+    if (b.acc) { c.save(); font(c, 'grotesk', 220); c.fillStyle = th.acc; c.shadowColor = th.acc; c.shadowBlur = 40; tracked(c, String(Math.round(b.v * clamp(u))), x + bw / 2, ly, 0, 'center'); c.restore() }
+    else mono(c, String(Math.round(b.v * clamp(u))), x + bw / 2, ly, 64, th.ink, { align: 'center', weight: 800 })
+    mono(c, b.label, x + bw / 2, y0 + 50, 30, b.acc ? th.acc : th.dim, { align: 'center', weight: 700 })
   })
   c.fillStyle = th.faint; c.fillRect(x0 - 30, y0, bars.length * (bw + gap) + 20, 2)
 }
@@ -172,30 +178,36 @@ const ALL44 = [...CVE_FEB, ...CVE_MAY, ...CVE_AUG]
 export function burstCards(pre) {
   const L0 = LINES[pre + '.0'], L1 = LINES[pre + '.1']
   const f0 = L0[0], f1 = L0[1], k0 = L1[0], k1 = L1[1], at = L1[2], door = L1[4]
+  // "FOUR" lands mid-word, but never later than 0.5 s + 1 frame before the next cut (readability); if there's no room,
+  // both halves show at once. The two "knocking"s share one card: the second knock flips it cream/black and shakes it,
+  // so the word never leaves the screen (the vocals are only 0.5 s apart).
+  const split = (w, next) => { const sp = Math.min(w.t + (w.e - w.t) * 0.5, next - 0.5 - 2 / FPS); return sp <= w.t + 1 / FPS ? null : sp }
+  const merge = k0.t - f1.t < 0.6   // no room for a readable cut before "Knocking": flip in place instead
   return [
-    { t: f0.t, split: f0.t + (f0.e - f0.t) * 0.5, words: ['FORTY', 'FOUR'], inv: false, flash: true, key: pre + '.0.0' },
-    { t: f1.t, split: f1.t + (f1.e - f1.t) * 0.5, words: ['FORTY', 'FOUR'], inv: true, key: pre + '.0.1' },
-    { t: k0.t, words: ['KNOCKING'], inv: false, key: pre + '.1.0' },
-    { t: k1.t, words: ['KNOCKING'], inv: true, shake: true, small: { s: 'AT THE', t: at.t }, key: pre + '.1.1' },
+    { t: f0.t, split: split(f0, merge ? k0.t : f1.t), words: ['FORTY', 'FOUR'], inv: false, flash: true, flipAt: merge ? f1.t : null, key: pre + '.0.0' },
+    ...(merge ? [] : [{ t: f1.t, split: split(f1, k0.t), words: ['FORTY', 'FOUR'], inv: true, key: pre + '.0.1' }]),
+    { t: k0.t, words: ['KNOCKING'], inv: false, flipAt: k1.t, small: { s: 'AT THE', t: at.t }, key: pre + '.1.0' },
     { t: door.t, words: ['DOOR'], inv: false, flash: true, door: true, key: pre + '.1.4' },
   ]
 }
 function drawCard(c, t, cards, i, tEnd) {
-  const cd = cards[i], lt = t - fq(cd.t)
-  const bg = cd.inv ? PAL.cream : PAL.black, ink = cd.inv ? PAL.black : PAL.cream
+  const cd = cards[i], flipped = cd.flipAt && t + 1e-6 >= fq(cd.flipAt), lt = t - fq(flipped ? cd.flipAt : cd.t)
+  const inv = cd.inv !== !!flipped
+  const bg = inv ? PAL.cream : PAL.black, ink = inv ? PAL.black : PAL.cream
+  if (flipped) mark('flip_' + cd.key)
   if (cd.flash && lt < 2 / FPS) { c.fillStyle = O; c.fillRect(0, 0, W, H); mark('flash_' + cd.key); return { bg: O, ink: PAL.black } }
   c.fillStyle = bg; c.fillRect(0, 0, W, H)
   mark('card_' + cd.key)
   const two = cd.words.length === 2
   const size = two ? 400 : cd.words[0].length > 5 ? 330 : 520
   font(c, 'grotesk', size)
-  const sx = cd.shake ? Math.sin(lt * 60) * 14 * clamp(1 - lt / 0.25) : 0
+  const sx = (cd.shake || flipped) ? Math.sin(lt * 60) * 14 * clamp(1 - lt / 0.25) : 0
   const x = 140 + sx
   cd.words.forEach((w, j) => {
-    const tw = j === 0 ? fq(cd.t) : fq(cd.split)
+    const tw = j === 0 || cd.split == null ? fq(cd.t) : fq(cd.split)
     if (t + 1e-6 < tw) return
     const y = two ? (j === 0 ? 470 : 860) : 700
-    const k = clamp((t - tw) / (5 / FPS))
+    const k = clamp((t - Math.max(tw, fq(flipped ? cd.flipAt : cd.t))) / (5 / FPS))
     // motion echo on entry (like a smeared type slam)
     for (let e = 3; e >= 1; e--) { c.globalAlpha = (1 - k) * 0.22 * e / 3; c.fillStyle = ink; c.fillText(w, x, y + e * 44 * (1 - k)) }
     c.globalAlpha = 1; c.fillStyle = (cd.door || (two && j === 1 && cd.inv === false && i === 0)) ? (cd.door ? ink : ink) : ink
@@ -213,7 +225,7 @@ function drawCard(c, t, cards, i, tEnd) {
     c.restore()
   }
   // tiny HUD on cards
-  mono(c, `HOOK ${String(i + 1).padStart(2, '0')}/05`, W - 150, 150, 16, ink, { align: 'right', alpha: 0.6 })
+  mono(c, `HOOK ${String(i + 1).padStart(2, '0')}/0${cards.length}`, W - 150, 150, 16, ink, { align: 'right', alpha: 0.6 })
   return { bg, ink }
 }
 export function cardsAt(cards, t, tEnd) { let i = -1; for (let k = 0; k < cards.length; k++) if (t + 1e-6 >= fq(cards[k].t)) i = k; return i }
@@ -254,21 +266,21 @@ add('intro', 0, B(6), { theme: 'dark', bg: 'void', sec: 'INTRO', hud: 0,
 add('heap', B(6), lineT0('1.1'), { theme: 'dark', bg: 'grid', sec: 'VERSE 1',
   draw(c, th, t) {
     dateline(c, th, 'FEB 12 2026  ·  pgcrypto', t, B(6))
-    const x0 = 250, y0 = 360, cw = 44, n = 32, tw = fq(wordT('1.0', 0)), tov = fq(wordT('1.0', 5))
+    const x0 = 150, y0 = 380, cw = 50, n = 32, tw = fq(wordT('1.0', 0)), tov = fq(wordT('1.0', 5))
     mono(c, 'chunk A · 16 bytes', x0, y0 - 30, 18, th.dim); mono(c, 'chunk B · next', x0 + 16 * cw + 10, y0 - 30, 18, th.dim)
     const rate = 16 / (tov - tw) // fill chunk A exactly by "overflow"
     const filled = t < tw ? 0 : Math.min(n, Math.floor((t - tw) * rate) + (t >= tov ? Math.floor((t - tov) * 22) : 0))
     for (let i = 0; i < n; i++) {
       const x = x0 + i * cw + (i >= 16 ? 10 : 0), over = i >= 16 && i < filled
-      c.strokeStyle = over ? th.acc : th.faint; c.lineWidth = over ? 2 : 1.2; c.strokeRect(x, y0, cw - 6, 60)
-      font(c, 'mono', 20, 600); c.fillStyle = i < filled ? (over ? th.acc : th.ink) : th.faint
-      c.fillText(i < filled ? '41' : (i >= 16 ? 'c3' : '00'), x + 7, y0 + 38)
+      c.strokeStyle = over ? th.acc : th.faint; c.lineWidth = over ? 2 : 1.2; c.strokeRect(x, y0, cw - 6, 76)
+      font(c, 'mono', 24, 600); c.fillStyle = i < filled ? (over ? th.acc : th.ink) : th.faint
+      c.fillText(i < filled ? '41' : (i >= 16 ? 'c3' : '00'), x + 7, y0 + 48)
     }
     // boundary marker
     c.fillStyle = t >= tov ? th.acc : th.dim; c.fillRect(x0 + 16 * cw + 1, y0 - 12, 4, 84)
     if (t >= tov) { const k = easeOut((t - tov) / 0.3)
-      c.save(); c.globalAlpha = k; mono(c, 'heap overflow', x0 + 16 * cw + 18, y0 + 120, 34, th.acc, { weight: 800 }); c.restore()
-      mono(c, 'CVE-2026-2005 · CVSS 8.8', x0 + 16 * cw + 18, y0 + 160, 20, th.dim, { alpha: k }) }
+      c.save(); c.globalAlpha = k; mono(c, 'heap overflow', x0 + 16 * cw + 18, y0 + 170, 64, th.acc, { weight: 800 }); c.restore()
+      mono(c, 'CVE-2026-2005 · CVSS 8.8', x0 + 16 * cw + 18, y0 + 220, 24, th.dim, { alpha: k }) }
   } })
 add('patch5', lineT0('1.1'), lineT0('1.2'), { theme: 'dark', bg: 'grid', sec: 'VERSE 1',
   draw(c, th, t) {
@@ -295,10 +307,10 @@ add('may11', lineT0('1.2'), lineT0('1.3'), { theme: 'dark', bg: 'grid', sec: 'VE
     const t11 = fq(wordT('1.2', 2)), trec = fq(wordT('1.2', 4)), twhile = fq(wordT('1.2', 7))
     CVE_MAY.forEach((id, i) => { const ts = t11 + i * BEAT / 8; if (t < ts) return
       const col = i % 4, row = Math.floor(i / 4); tag(c, th, 'CVE-2026-' + id, 250 + col * 330, 300 + row * 90, { size: 26, alpha: easeOut((t - ts) / 0.1) }) })
-    if (t >= trec) { const k = easeOutBack((t - trec) / 0.3); c.save(); c.translate(1480, 700); c.rotate(-0.1); c.scale(k, k)
+    if (t >= trec) { const k = easeOutBack((t - trec) / 0.3); c.save(); c.translate(1480, 600); c.rotate(-0.1); c.scale(k, k)
       c.strokeStyle = th.acc; c.lineWidth = 5; c.strokeRect(-190, -70, 380, 120); font(c, 'grotesk', 64); c.fillStyle = th.acc; tracked(c, 'RECORD', 0, 12, 4, 'center')
       mono(c, '11 in one release', 0, 90, 20, th.acc, { align: 'center', weight: 700 }); c.restore() }
-    if (t >= twhile) mono(c, '(until August)', 1480, 850, 20, th.dim, { align: 'center', alpha: clamp((t - twhile) / 0.3) })
+    if (t >= twhile) mono(c, '(until August)', 1480, 740, 20, th.dim, { align: 'center', alpha: clamp((t - twhile) / 0.3) })
   } })
 add('minor', lineT0('1.3'), lineT0('1.4'), { theme: 'dark', bg: 'grid', sec: 'VERSE 1',
   draw(c, th, t) {
@@ -317,8 +329,8 @@ add('minor', lineT0('1.3'), lineT0('1.4'), { theme: 'dark', bg: 'grid', sec: 'VE
 function codeView(c, th, t, t0, { scan = true, ghosts = false } = {}) {
   const x = 260, y0 = 230, lh = 30
   mono(c, 'src/backend/access/heap/heapam.c @ REL_19_BETA4  ·  L1434–1480', x, 180, 18, th.dim, { weight: 600 })
-  const beam = scan ? y0 + ((t - t0) * 190) % (HEAP.length * lh) : 9999
-  HEAP.slice(0, 24).forEach((L, i) => {
+  const beam = scan ? y0 + ((t - t0) * 190) % (17 * lh) : 9999
+  HEAP.slice(0, 17).forEach((L, i) => {
     const y = y0 + i * lh, read = y < beam
     mono(c, String(1434 + i).padStart(4), x - 70, y, 18, th.faint)
     mono(c, L, x, y, 21, read ? th.ink : th.dim, { alpha: read ? 0.9 : 0.35 })
@@ -328,9 +340,9 @@ function codeView(c, th, t, t0, { scan = true, ghosts = false } = {}) {
     mono(c, `lines read: ${String(Math.min(9999, Math.floor((t - t0) * 190 / lh * 11))).padStart(4, '0')}`, 1660, 180, 18, th.acc, { align: 'right', weight: 700 }) }
   if (ghosts) {
     // highlight a few tokens (illustrative: no claim that these lines contain bugs)
-    const hl = [[13, 'unlikely'], [27, 'NULL'], [36, 'rs_ctup']]
+    const hl = [[13, 'unlikely'], [14, 'ereport'], [16, 'errmsg_internal']]
     hl.forEach(([li, tok], k) => { const ts = t0 + 0.35 + k * 0.55; if (t < ts) return
-      const L = HEAP[li]; font(c, 'mono', 21, 500); const xi = x + mw(c, L.slice(0, L.indexOf(tok))), wi = mw(c, tok), y = y0 + Math.min(li, 23) * lh
+      const L = HEAP[li]; font(c, 'mono', 21, 500); const xi = x + mw(c, L.slice(0, L.indexOf(tok))), wi = mw(c, tok), y = y0 + Math.min(li, 16) * lh
       c.strokeStyle = O; c.lineWidth = 2; c.strokeRect(xi - 4, y - 22, wi + 8, 30)
       ghost(c, xi + wi + 40, y - 30 - (t - ts) * 40, 16, O, clamp(1 - (t - ts) / 2.5)) })
   }
@@ -365,8 +377,8 @@ function chorus(n, pre, tBurstEnd, tEnd) {
     draw(c, th, t) {
       const w = LINES[L(2)]
       barChart(c, th, t, [{ label: '2023', v: 7, t: fq(w[0].t) }, { label: '2024', v: 7, t: fq(w[0].t) + BEAT / 4 }, { label: '2025', v: 7, t: fq(w[1].t) },
-        { label: '2026', v: 44, t: fq(w[5].t), acc: true }], { x0: 520, y0: 700 })
-      mono(c, 'PostgreSQL CVEs per year · postgresql.org/support/security', 520, 800, 18, th.dim)
+        { label: '2026', v: 44, t: fq(w[5].t), acc: true, grow: 0.9 }], { x0: 300, y0: 720, bw: 270, gap: 110, hmax: 7 * 28, vmax: 7 })
+      mono(c, 'PostgreSQL CVEs per year · postgresql.org/support/security', 1620, 250, 16, th.dim, { align: 'right' })
     } })
   add('slonik' + n, lineT0(L(3)), lineT0(L(4)), { theme: 'dark', bg: 'grid', sec: 'CHORUS',
     draw(c, th, t) { const t0 = lineT0(L(3)); slonik(c, 960, 430, 560, ease((t - t0) / 1.5), { color: th.ink, width: 3.5, eyeColor: th.acc }) } })
@@ -396,7 +408,7 @@ function chorus(n, pre, tBurstEnd, tEnd) {
       c.save(); c.translate(960, 560); c.scale(z * (1.12 - 0.12 * easeOut(k)), z * (1.12 - 0.12 * easeOut(k))); font(c, 'grotesk', 640)
       c.fillStyle = O; c.shadowColor = O; c.shadowBlur = 60; tracked(c, '44', 0, 230, 0, 'center'); c.restore()
       seen(widx.get(LINES[L(6)][0])); mark('big44_' + n)
-      mono(c, 'CVEs fixed in 2026 · 5 + 11 + 28', 960, 960, 22, th.dim, { align: 'center', weight: 600 })
+      mono(c, 'CVEs fixed in 2026 · 5 + 11 + 28', 960, 930, 22, th.dim, { align: 'center', weight: 600 })
     } })
 }
 chorus(1, '3', lineT0('3.2'), B(36))
@@ -416,7 +428,7 @@ add('most', lineT0('4.1'), lineT0('4.2'), { theme: 'dark', bg: 'news', sec: 'VER
     ;[['FEB 12', 5], ['MAY 14', 11], ['AUG 13', 28]].forEach(([d, v], i) => { const u = easeOut((t - t0 - i * 0.15) / 0.5); if (u <= 0) return
       const y = 330 + i * 150; mono(c, d, 250, y + 40, 28, th.dim, { weight: 700 }); c.fillStyle = i === 2 ? th.acc : th.ink; c.fillRect(430, y, 1100 * v / 28 * u, 56)
       mono(c, String(v), 450 + 1100 * v / 28 * u, y + 42, 36, i === 2 ? th.acc : th.ink, { weight: 700 }) })
-    if (t >= tm) mono(c, 'MOST EVER FIXED IN A SINGLE RELEASE', 430, 820, 30, th.acc, { weight: 800, alpha: clamp((t - tm) / 0.2) })
+    if (t >= tm) mono(c, 'MOST EVER FIXED IN A SINGLE RELEASE', 430, 760, 30, th.acc, { weight: 800, alpha: clamp((t - tm) / 0.2) })
   } })
 add('r185', lineT0('4.2'), lineT0('4.3'), { theme: 'dark', bg: 'news', sec: 'VERSE 2',
   draw(c, th, t) {
@@ -472,7 +484,7 @@ add('maint', lineT0('4.7'), B(52), { theme: 'dark', bg: 'news', sec: 'VERSE 2',
     const t0 = fq(lineT0('4.7')), R = rng(3)
     for (let i = 0; i < 60; i++) { const x0 = 300 + (i % 12) * 100, y0 = 300 + Math.floor(i / 12) * 90, go = t0 + R() * 3.2, u = easeIn((t - go) / 0.9)
       c.fillStyle = th.ink; c.globalAlpha = 1 - u; c.fillRect(x0 + u * 1600, y0, 14, 26); c.globalAlpha = 1 }
-    mono(c, '(a mood, not a statistic)', W - 150, 950, 16, th.dim, { align: 'right' })
+    mono(c, '(a mood, not a statistic)', W - 150, 760, 16, th.dim, { align: 'right' })
   } })
 add('pre2', B(52), lineT0('6.0'), { theme: 'dark', bg: 'rings', sec: 'PRE-CHORUS', counterBig: true, draw(c, th, t) { counterStage(c, th, t, B(52), 2, 0) } })
 chorus(2, '6', wordT('6.2', 2), B(70))
@@ -580,14 +592,14 @@ add('repack', lineT0('10.2'), lineT0('10.3'), { theme: 'light', bg: 'dawn', sec:
   draw(c, th, t) {
     const t0 = fq(lineT0('10.2')), tv = fq(wordT('10.2', 2)), R = rng(9)
     mono(c, 'REPACK (CONCURRENTLY) orders;', 150, 230, 26, th.ink, { weight: 700 })
-    const cols = 12, rows = 8, s = 30
+    const cols = 12, rows = 6, s = 26
     const live = []; for (let i = 0; i < cols * rows; i++) live.push(R() > 0.42)
     const u = clamp((t - t0) / 2.2), nl = live.filter(Boolean).length
-    for (let i = 0; i < cols * rows; i++) { const x = 150 + (i % cols) * (s + 4), y = 280 + Math.floor(i / cols) * (s + 4)
+    for (let i = 0; i < cols * rows; i++) { const x = 150 + (i % cols) * (s + 4), y = 270 + Math.floor(i / cols) * (s + 4)
       c.fillStyle = live[i] ? th.ink : th.faint; c.globalAlpha = live[i] ? 1 - 0.6 * u : 1; c.fillRect(x, y, s, s); c.globalAlpha = 1 }
     // compacted copy grows while new rows keep arriving (orange = concurrent writes)
-    let k = 0; for (let i = 0; i < Math.floor(u * nl) + Math.floor(u * 6); i++) { const x = 150 + (k % cols) * (s + 4), y = 620 + Math.floor(k / cols) * (s + 4); c.fillStyle = i >= nl ? th.acc : th.ink; c.fillRect(x, y, s, s); k++ }
-    mono(c, 'old heap', 150, 580, 18, th.dim); mono(c, 'new heap (compact) · writes keep flowing', 150, 920, 18, th.dim)
+    let k = 0; for (let i = 0; i < Math.floor(u * nl) + Math.floor(u * 6); i++) { const x = 150 + (k % cols) * (s + 4), y = 530 + Math.floor(k / cols) * (s + 4); c.fillStyle = i >= nl ? th.acc : th.ink; c.fillRect(x, y, s, s); k++ }
+    mono(c, 'old heap', 150, 490, 18, th.dim); mono(c, 'new heap (compact) · writes keep flowing', 150, 760, 18, th.dim)
     if (t >= tv) { mono(c, 'autovacuum_max_parallel_workers = 4', 1000, 230, 24, th.ink, { weight: 700, alpha: clamp((t - tv) / 0.2) })
       for (let w = 0; w < 4; w++) { const y = 300 + w * 110; mono(c, `worker ${w + 1}`, 1000, y + 24, 18, th.dim); c.fillStyle = th.faint; c.fillRect(1140, y, 600, 36)
         const p = clamp((t - tv - w * 0.07) / 1.6); c.fillStyle = th.acc; c.fillRect(1140, y, 600 * p, 36) } }
@@ -638,8 +650,8 @@ add('outro', B(106), TOTAL, { theme: 'light', bg: 'dawn', sec: 'OUTRO',
       for (let d = 1; d <= 31; d++) { const idx = d + 2, x = 580 + (idx % 7) * 120, y = 370 + Math.floor(idx / 7) * 70
         const early = d <= 10 && t >= fq(wordT('11.0', 2)); if (early) { c.fillStyle = rgba(th.acc, 0.16); c.fillRect(x - 50, y - 38, 100, 56) }
         mono(c, String(d), x, y, 26, early ? th.acc : th.ink, { align: 'center', weight: early ? 800 : 500 }) }
-      mono(c, 'release candidate: "early October"', 560, 830, 22, th.dim)
-      if (t >= tt) mono(c, 'test it → postgresql.org/developer/beta', 560, 880, 22, th.ink, { weight: 700, alpha: clamp((t - tt) / 0.2) })
+      mono(c, 'release candidate: "early October"', 560, 790, 22, th.dim)
+      if (t >= tt) mono(c, 'test it → postgresql.org/developer/beta', 560, 835, 22, th.ink, { weight: 700, alpha: clamp((t - tt) / 0.2) })
       c.restore() }
     // fade to black, then the tiny COMMIT
     if (fade > 0) { c.fillStyle = `rgba(11,10,9,${fade})`; c.fillRect(0, 0, W, H) }
