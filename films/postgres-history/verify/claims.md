@@ -92,3 +92,15 @@ Fixed after verification:
 Accepted with external source (not in repo): #10 post-Ingres naming, #14 Postgres95 1995, #65 tagline (postgresql.org homepage).
 Accepted as illustrative (no factual claim on screen): #5 relation example, MVCC xmin/xmax values, WAL segment names, agent SQL, branch names.
 Counts shown: 65,484 commits (upstream/master 3c5d9d914fa, 2026-09-26); Tom Lane 16,885 (25.8%); 1,532 people named in authorship/credit trailers.
+
+## Final adversarial round (2026-09-26, afternoon)
+
+Independent re-check (verify/final_factcheck.md) re-confirmed all commit arithmetic digit-for-digit (65,484 total; all 30 committer counts; per-year table), the first commit, license text, Postgres95 monitor transcript, PG18/PG19 features and dates, `--no-policies` help strings, DB-Engines years, SO 2025 numbers. Fixed:
+- People wall: parser artifacts removed ("as per buildfarm", "using valgrind", "buildfarm member …", bot account, stray phrases); name-order duplicates merged → 1,481 people (tools/people.py)
+- "Add 64-bit XIDs into PostgreSQL 15" thread year 2022 → 2021 (first post 2021-12-30)
+- Turing scene HUD year 2015 → 2014 (matches "2014 A.M. Turing Award" / MMXIV)
+- WAL scene: value under "INSERT LSN" now in real LSN format (`X/XXXXXXXX`), not a segment-filename format
+- TDE thread: real subject line (truncated with "…" on screen) instead of a paraphrase
+- Time travel: now the documented Postgres query `SELECT name, population FROM cities['epoch', 'now'] WHERE name = 'Mariposa';` (postgresql.org docs 6.3, "Time Travel"; feature removed in 6.2), replacing a secondary-source POSTQUEL form
+- Feature credits added from release notes (verify/feature_credits.json); 8.3 card is SQL/XML (Nikolay Samokhvalov, Pavel Stehule, Peter Eisentraut — release-8.3.sgml); 18 UUIDv7 credited to Andrey Borodin (commit 78c5e141e Author: trailer)
+Accepted as-is: autovacuum (8.1) / full text search (8.3) cards mark the release that brought them into core; "one in every four" = 25.8%; "readers never block writers" (true; half of the documented guarantee).

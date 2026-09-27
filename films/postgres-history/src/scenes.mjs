@@ -29,9 +29,9 @@ function glowDot(c, x, y, r, col, a = 1) {
 const PG19_FEATS = ['REPACK CONCURRENTLY', 'SEQUENCE REPLICATION', 'WAIT FOR LSN', 'PARALLEL AUTOVACUUM', 'PG_PLAN_ADVICE'], PG19_CAPTION = '19 · IN BETA · SEPTEMBER 2026'
 const FUTURE_QS = ['THREADS?', '64-BIT XIDS?', 'DIRECT I/O?', 'AGENTS AS DBAS?']
 const FUTURE_THREADS = [["Let's make PostgreSQL multi-threaded", '2023', 0], ["Re: Let's make PostgreSQL multi-threaded", '', 1], ["Re: Let's make PostgreSQL multi-threaded", '', 2],
-  ['Add 64-bit XIDs into PostgreSQL 15', '2022', 0], ['Re: Add 64-bit XIDs into PostgreSQL 15', '', 1],
+  ['Add 64-bit XIDs into PostgreSQL 15', '2021', 0], ['Re: Add 64-bit XIDs into PostgreSQL 15', '', 1],
   ['Asynchronous and "direct" IO support for PostgreSQL', '2021', 0], ['Re: Asynchronous and "direct" IO support', '', 1],
-  ['[Proposal] Table-level Transparent Data Encryption', '2018', 0], ['Re: [Proposal] Table-level TDE and KMS', '', 1],
+  ['[Proposal] Table-level Transparent Data Encryption (TDE) and Key Management Service (KMS)', '2018', 0], ['Re: [Proposal] Table-level Transparent Data Encryption (TDE) and Key Management Service (KMS)', '', 1],
   ['Built-in connection pooler', '2019', 0], ['Re: Built-in connection pooler', '', 1], ["Re: Let's make PostgreSQL multi-threaded", '', 1]]
 const COMMITTERS = [['Tom Lane', 16885], ['Bruce Momjian', 14113], ['Peter Eisentraut', 6596], ['Robert Haas', 2628], ['Michael Paquier', 2624], ['Alvaro Herrera', 1950], ['Heikki Linnakangas', 1932], ['Andres Freund', 1552], ['Marc G. Fournier', 1491], ['Thomas G. Lockhart', 1078], ['Andrew Dunstan', 1009], ['Magnus Hagander', 928], ['Fujii Masao', 833], ['Michael Meskes', 766], ['Amit Kapila', 724], ['Thomas Munro', 642], ['Neil Conway', 616], ['David Rowley', 602], ['Noah Misch', 557], ['Alexander Korotkov', 536], ['Peter Geoghegan', 531], ['Daniel Gustafsson', 526], ['Vadim B. Mikheev', 519], ['Nathan Bossart', 499], ['Tatsuo Ishii', 453], ['Simon Riggs', 453], ['Jeff Davis', 439], ['Teodor Sigaev', 399], ['Tomas Vondra', 367], ['Stephen Frost', 279]]
 const ALLPEOPLE = JSON.parse(fs.readFileSync(new URL('../assets/people.json', import.meta.url), 'utf8'))
@@ -160,12 +160,12 @@ export const SCENES = [
       // stacked row versions receding in time
       const n = 6
       for (let i = n - 1; i >= 0; i--) { const bt = 0.5 + (n - 1 - i) * 0.6; if (S.b < bt) continue; const a = easeOut((S.b - bt) / 0.6)
-        const x = 960 + i * 50, y = 400 - i * 40, w = 560, h = 64
+        const x = 960 + i * 45, y = 400 - i * 40, w = 640, h = 64
         c.globalAlpha = a; c.fillStyle = '#f5eddb'; c.fillRect(x, y, w, h); c.globalAlpha = a * (i === 0 ? 1 : 0.35 + 0.1 * (n - i)); c.strokeStyle = i === 0 ? th.accent : th.ink; c.lineWidth = i === 0 ? 3 : 1.5; c.strokeRect(x, y, w, h)
-        c.fillStyle = th.ink; c.font = '400 20px Mono'; c.fillText(`EMP "Sam" salary = ${10000 + (n - i) * 2500}`, x + 20, y + 29)
+        c.fillStyle = th.ink; c.font = '400 18px Mono'; c.fillText(`cities 'Mariposa' population = ${1200 + (n - i) * 60}`, x + 20, y + 29)
         c.fillStyle = th.dim; c.font = '400 18px Mono'; c.textAlign = 'right'; c.fillText(`valid ${1988 - i} → ${i === 0 ? 'now' : 1989 - i}`, x + w - 20, y + 29); c.textAlign = 'left'
         c.globalAlpha = 1 }
-      if (S.b > 4.6) { const a = clamp((S.b - 4.6) / 0.8); c.globalAlpha = a; mono(c, 'retrieve (EMP.salary) from EMP [T] where EMP.name = "Sam"', 960, 860, 22, th.hot, 1); c.globalAlpha = 1 }
+      if (S.b > 4.6) { const a = clamp((S.b - 4.6) / 0.8); c.globalAlpha = a; mono(c, "SELECT name, population FROM cities['epoch', 'now'] WHERE name = 'Mariposa';", 960, 860, 18, th.hot, 0); c.globalAlpha = 1 }
     } },
   { id: 'pg95', bars: 2, bpm: 120, act: 1, chap: 'II · POSTGRES', theme: 'paper', year: [1994, 1995], type: [0.8, 6],
     draw(c, th, S) {
@@ -263,7 +263,7 @@ export const SCENES = [
       c.restore()
       c.fillStyle = th.bg0 ? 'rgba(0,0,0,0)' : ''; c.strokeStyle = th.accent; c.lineWidth = 3
       poly(c, [[1300, 250], [1300, 610]]); mono(c, 'INSERT LSN', 1300, 235, 20, th.accent, 3, 'center')
-      mono(c, '00000001' + '00000000' + (0x40 + Math.floor(S.t * 3)).toString(16).toUpperCase().padStart(8, '0'), 1300, 680, 22, th.ink, 3, 'center')
+      mono(c, '0/' + (0x4A2F1C80 + Math.floor(S.t * 7919) * 8).toString(16).toUpperCase().padStart(8, '0'), 1300, 680, 22, th.ink, 3, 'center')
       c.strokeStyle = th.ink; c.lineWidth = 2; const dy = 780
       poly(c, [[1000, dy], [1600, dy]], ease(S.b / 3)); for (let i = 0; i < 4; i++) { const bt = 2 + i; if (S.b > bt) { const q = clamp((S.b - bt) / 0.7); glowDot(c, lerp(1000, 1600, q), dy, 4, 'rgba(168,50,42,1)', 1 - q * 0.5) } }
       mono(c, 'fsync()', 1640, dy + 6, 22, th.hot, 3)
@@ -297,7 +297,7 @@ export const SCENES = [
         c.font = `${i < 3 ? 500 : 400} 30px Mono`; c.fillStyle = i < 3 ? th.accent : th.ink; c.fillText(s, 980, 280 + i * 50); c.globalAlpha = 1 })
       if (S.b > 1) { c.globalAlpha = 0.08 + 0.04 * Math.sin(S.t * 3); c.font = '900 620px Garamond'; c.fillStyle = th.accent; c.fillText('{ }', 900, 820); c.globalAlpha = 1 }
     } },
-  { id: 'turing', bars: 2, bpm: 132, act: 2, chap: 'IX · HONOR', theme: 'dark', year: [2015, 2015], hit: true,
+  { id: 'turing', bars: 2, bpm: 132, act: 2, chap: 'IX · HONOR', theme: 'dark', year: [2014, 2014], hit: true,
     draw(c, th, S) {
       headline(c, th, S, ['ITS CREATOR WON', '!*THE TURING*', '!*AWARD.*'], { y: 290 })
       caption(c, th, S, 'MICHAEL STONEBRAKER · ACM A.M. TURING AWARD 2014', 112, 740)
