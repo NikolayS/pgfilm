@@ -1,0 +1,47 @@
+
+HeapTuple
+heap_getnext(TableScanDesc sscan, ScanDirection direction)
+{
+    HeapScanDesc scan = (HeapScanDesc) sscan;
+
+    /*
+     * This is still widely used directly, without going through table AM, so
+     * add a safety check.  It's possible we should, at a later point,
+     * downgrade this to an assert. The reason for checking the AM routine,
+     * rather than the AM oid, is that this allows to write regression tests
+     * that create another AM reusing the heap handler.
+     */
+    if (unlikely(sscan->rs_rd->rd_tableam != GetHeapamTableAmRoutine()))
+        ereport(ERROR,
+                (errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
+                 errmsg_internal("only heap AM is supported")));
+
+    /* Note: no locking manipulations needed */
+
+    if (scan->rs_base.rs_flags & SO_ALLOW_PAGEMODE)
+        heapgettup_pagemode(scan, direction,
+                            scan->rs_base.rs_nkeys, scan->rs_base.rs_key);
+    else
+        heapgettup(scan, direction,
+                   scan->rs_base.rs_nkeys, scan->rs_base.rs_key);
+
+    if (scan->rs_ctup.t_data == NULL)
+        return NULL;
+
+    /*
+     * if we get here it means we have a new current scan tuple, so point to
+     * the proper return buffer and return the tuple.
+     */
+
+    pgstat_count_heap_getnext(scan->rs_base.rs_rd);
+
+    return &scan->rs_ctup;
+}
+
+bool
+heap_getnextslot(TableScanDesc sscan, ScanDirection direction, TupleTableSlot *slot)
+{
+    HeapScanDesc scan = (HeapScanDesc) sscan;
+
+    /* Note: no locking manipulations needed */
+
