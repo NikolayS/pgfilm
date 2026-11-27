@@ -1,0 +1,17 @@
+{
+  "name": "pgfilm-html-film",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Render a deterministic HTML page to MP4: headless Chromium frames, linear-light motion blur, x264",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node render.mjs --page template/index.html --out build/template.mp4 --width 1080 --height 1080 --subframes 4 --chunk 30"
+  },
+  "dependencies": {
+    "playwright-core": "^1.65.1"
+  }
+}
