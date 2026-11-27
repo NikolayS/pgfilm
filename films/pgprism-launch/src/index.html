@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>pgPrism film</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="film.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="2160" height="2160"></canvas>
+
+  <!-- brand row (always on) -->
+  <header id="brand">
+    <div class="lockup">
+      <svg viewBox="0 0 64 64" width="44" height="44" fill="none" aria-hidden="true">
+        <line x1="6" y1="34" x2="22" y2="34" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+        <line x1="22" y1="34" x2="40" y2="27" stroke="#FF6112" stroke-width="1.75" stroke-opacity="0.75"/>
+        <line x1="22" y1="34" x2="42" y2="32" stroke="#73BF69" stroke-width="1.75" stroke-opacity="0.75"/>
+        <line x1="22" y1="34" x2="44" y2="37" stroke="#5794F2" stroke-width="1.75" stroke-opacity="0.75"/>
+        <line x1="22" y1="34" x2="46" y2="42" stroke="#F2495C" stroke-width="1.75" stroke-opacity="0.75"/>
+        <polygon points="32,11 52,48 12,48" fill="#94A3B8" fill-opacity="0.10" stroke="#94A3B8" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="40.5" y1="26.5" x2="57" y2="22" stroke="#FF6112" stroke-width="2.75" stroke-linecap="round"/>
+        <line x1="43" y1="31.5" x2="57" y2="30" stroke="#73BF69" stroke-width="2.75" stroke-linecap="round"/>
+        <line x1="45.5" y1="36.5" x2="57" y2="38" stroke="#5794F2" stroke-width="2.75" stroke-linecap="round"/>
+        <line x1="48" y1="41.5" x2="57" y2="46" stroke="#F2495C" stroke-width="2.75" stroke-linecap="round"/>
+      </svg>
+      <b>pgPrism</b>
+    </div>
+    <span class="site">pgprism.dev</span>
+  </header>
+
+  <!-- captions: one key thing per beat (built in film.js) -->
+  <div id="caps"></div>
+
+  <!-- the lens: tight close-ups of the real component -->
+  <section id="card">
+    <div id="lens">
+      <div id="sweep"><i class="tail t1"></i><i class="tail t2"></i><i class="tail t3"></i><i class="tail t4"></i><i class="edge"></i></div>
+      <aside id="clip">
+        <div class="clip-head"><span class="clip-ico"></span>Clipboard<em>Markdown</em></div>
+        <pre id="clip-body"></pre>
+      </aside>
+    </div>
+  </section>
+
+  <div id="pills"></div>
+
+  <div id="cursor"><svg viewBox="0 0 28 40" width="46" height="66"><path d="M3 2.5v27.2l6.9-6.3 4.6 10.9 4.7-2-4.6-10.6h9.6z" fill="#0b0d12" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></svg><i id="ripple"></i></div>
+
+  <!-- end card: where to get it -->
+  <section id="end">
+    <div class="end-logo">
+      <svg viewBox="0 0 64 64" width="150" height="150" fill="none" aria-hidden="true">
+        <line x1="6" y1="34" x2="22" y2="34" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+        <line x1="22" y1="34" x2="40" y2="27" stroke="#FF6112" stroke-width="1.75" stroke-opacity="0.75"/>
+        <line x1="22" y1="34" x2="42" y2="32" stroke="#73BF69" stroke-width="1.75" stroke-opacity="0.75"/>
+        <line x1="22" y1="34" x2="44" y2="37" stroke="#5794F2" stroke-width="1.75" stroke-opacity="0.75"/>
+        <line x1="22" y1="34" x2="46" y2="42" stroke="#F2495C" stroke-width="1.75" stroke-opacity="0.75"/>
+        <polygon points="32,11 52,48 12,48" fill="#94A3B8" fill-opacity="0.10" stroke="#94A3B8" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="40.5" y1="26.5" x2="57" y2="22" stroke="#FF6112" stroke-width="2.75" stroke-linecap="round"/>
+        <line x1="43" y1="31.5" x2="57" y2="30" stroke="#73BF69" stroke-width="2.75" stroke-linecap="round"/>
+        <line x1="45.5" y1="36.5" x2="57" y2="38" stroke="#5794F2" stroke-width="2.75" stroke-linecap="round"/>
+        <line x1="48" y1="41.5" x2="57" y2="46" stroke="#F2495C" stroke-width="2.75" stroke-linecap="round"/>
+      </svg>
+      <b>pgPrism</b>
+    </div>
+    <p class="end-tag">EXPLAIN plans, <em class="spec">refracted.</em></p>
+    <div class="end-url">pgprism.dev</div>
+    <div class="end-cmd"><i>$</i> npm install pgprism</div>
+    <div class="end-gh">
+      <svg viewBox="0 0 16 16" width="34" height="34" aria-hidden="true"><path fill="currentColor" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+      github.com/NikolayS/pgprism
+    </div>
+    <div class="end-chips"><span>zero dependencies</span><span>37 KiB gzip</span><span>Apache-2.0</span><span>Postgres 15&ndash;19</span></div>
+  </section>
+</div>
+
+<div id="dev"><button id="dev-play">pause</button><input id="dev-scrub" type="range" min="0" max="1" step="0.001" value="0"><span id="dev-time"></span></div>
+
+<script src="../node_modules/gsap/dist/gsap.min.js"></script>
+<script src="vendor/pgprism.iife.js"></script>
+<script src="data/plans.js"></script>
+<script src="film.js"></script>
+</body>
+</html>

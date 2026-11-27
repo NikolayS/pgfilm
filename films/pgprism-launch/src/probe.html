@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>pgprism probe</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  html, body { margin: 0; background: #0b0e14; color: #f4f6f9; font-family: "Inter", sans-serif; }
+  #host { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .pgp-root * { transition: none !important; }
+</style>
+</head>
+<body>
+<div id="host"></div>
+<script src="vendor/pgprism.iife.js"></script>
+<script src="data/plans.js"></script>
+<script>
+// Dev tool: render the real component at a given width / view / state for framing decisions.
+// ?w=480&view=table&z=2&diag=1&sel=1&metric=buffers&plan=movies-seq-scans&sx=0
+(async function () {
+  const q = new URLSearchParams(location.search);
+  const host = document.getElementById('host');
+  const w = +(q.get('w') || 480), z = +(q.get('z') || 1);
+  host.style.width = w + 'px';
+  host.style.transform = `scale(${z})`;
+  const plan = window.PLANS[q.get('plan') || 'movies-seq-scans'].plan;
+  const opts = { theme: q.get('theme') || 'dark', view: q.get('view') || 'table', useShadow: false };
+  if (q.get('metric')) opts.metric = q.get('metric');
+  window.__film = { fps: 60, duration: 1, seek() {}, ready: null };
+  window.__film.ready = (async () => {
+    await document.fonts.ready;
+    const handle = window.pgprism.renderPlan(host, plan, opts);
+    window.__h = handle;
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    if (q.get('diag')) { const d = host.querySelector('.pgp-diag-head'); if (d) d.click(); }
+    if (q.get('sel')) {
+      const rows = host.querySelectorAll('.pgp-table tbody tr, .pgp-tree-card, .pgp-flame-row');
+      const r = rows[+q.get('sel') - 1]; if (r) r.click();
+    }
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    if (q.get('sx')) { for (const el of host.querySelectorAll('*')) if (el.scrollWidth > el.clientWidth + 4 && getComputedStyle(el).overflowX !== 'visible') el.scrollLeft = +q.get('sx'); }
+    const box = (el) => { const r = el.getBoundingClientRect(); return [Math.round(r.left / z), Math.round(r.top / z), Math.round(r.width / z), Math.round(r.height / z)]; };
+    const out = {};
+    for (const sel of ['.pgp-summary', '.pgp-meta-strip', '.pgp-diag', '.pgp-diag-list', '.pgp-toolbar', '.pgp-table', '.pgp-inspector', '.pgp-workspace', '.pgp-tree', '.pgp-flame']) {
+      const el = host.querySelector(sel); if (el) out[sel] = box(el);
+    }
+    out.ths = Array.from(host.querySelectorAll('.pgp-table thead th')).map((th) => [th.textContent.trim().slice(0, 18), ...box(th)]);
+    out.total = box(host.firstElementChild || host);
+    out.scrollers = Array.from(host.querySelectorAll('*')).filter((el) => el.scrollWidth > el.clientWidth + 4 && getComputedStyle(el).overflowX !== 'visible').map((el) => [el.className, el.clientWidth, el.scrollWidth]);
+    window.__probe = out;
+  })();
+})();
+</script>
+</body>
+</html>
