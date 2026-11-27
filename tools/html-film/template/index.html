@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>film template</title>
+<!--
+  Starter film page, no dependencies. Copy it into films/<name>/src/ and replace the content.
+  The contract with the renderer is one object: window.__film = { fps, duration, ready, seek(t) }.
+  Everything on screen must be a pure function of t: no CSS transitions or animations, no timers,
+  no Date.now(), no Math.random(). The renderer calls seek() in any order, from several browsers.
+-->
+<style>
+  :root { --bg: #070a13; --panel: #0b0e14; --line: #1d2533; --ink: #f6f7f9; --soft: #9aa6b8; --accent: #ff7a33; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  /* System fonts keep the template dependency-free. A real film bundles its webfonts
+     (font-display: block, loaded in __film.ready), or the output depends on the machine. */
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  code, .mono { font-family: ui-monospace, Menlo, Consolas, monospace; }
+
+  /* The stage is always 1080x1080 CSS px: scaled to the window for preview, rendered 1:1
+     (--width 1080 --height 1080) or at 2x (--scale 2). Sizes below are px on that stage. */
+  #stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--bg); }
+  #bg { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; }
+
+  #brand { position: absolute; left: 44px; right: 44px; top: 34px; display: flex; justify-content: space-between; font-size: 30px; font-weight: 700; }
+  #brand span { color: var(--soft); font-weight: 500; }
+
+  /* One caption per beat. 88 px on a 1080 px frame is about the smallest headline that reads in a phone feed. */
+  .cap { position: absolute; left: 44px; right: 44px; top: 104px; }
+  .cap h1 { margin: 0; font-size: 88px; line-height: 1.02; font-weight: 800; letter-spacing: -.03em; }
+  .cap p { margin: 18px 0 0; font-size: 34px; line-height: 1.2; color: var(--soft); }
+
+  /* The card is a window onto #world; the camera moves #world, never the card. */
+  #card { position: absolute; left: 36px; top: 344px; width: 1008px; height: 700px; overflow: hidden;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 28px; box-shadow: 0 40px 120px rgba(0, 0, 0, .55); }
+  #world { position: absolute; left: 0; top: 0; width: 480px; transform-origin: 0 0; padding: 22px; }
+  .row { display: grid; grid-template-columns: 96px 150px 1fr; align-items: center; gap: 12px; height: 62px; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .row b { font-weight: 600; }
+  .row i { display: block; height: 14px; border-radius: 7px; background: var(--accent); }
+  .row em { font-style: normal; text-align: right; color: var(--soft); }
+  #ring { position: absolute; border: 3px solid var(--accent); border-radius: 12px; box-shadow: 0 0 0 6px rgba(255, 122, 51, .18); }
+
+  #end { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px;
+    background: var(--bg); text-align: center; }
+  #end b { font-size: 120px; font-weight: 800; letter-spacing: -.04em; }
+  #end p { margin: 0; font-size: 44px; color: var(--soft); }
+  #end code { font-size: 38px; padding: 18px 30px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+
+  /* preview only */
+  #dev { position: fixed; left: 0; right: 0; bottom: 0; height: 34px; display: none; align-items: center; gap: 10px; padding: 0 10px; background: #111; font: 12px ui-monospace, monospace; color: #ccc; }
+  body.dev #dev { display: flex; }
+  #dev input { flex: 1; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="2160" height="2160"></canvas>
+  <header id="brand">product<span>example.org</span></header>
+  <div id="caps"></div>
+  <section id="card"><div id="world"><div id="ring"></div></div></section>
+  <section id="end"><b>product</b><p>What it is, in five words.</p><code>$ npm install product</code><p>example.org</p></section>
+</div>
+<div id="dev"><button id="dev-play">pause</button><input id="dev-scrub" type="range" min="0" max="1" step="0.001" value="0"><span id="dev-time"></span></div>
+
+<script>
+(function () {
+  'use strict';
+  const SW = 1080, SH = 1080, FPS = 60, DURATION = 8;
+  const CARD = { w: 1008, h: 700 };
+  const S0 = CARD.w / 480;            // the 480 px-wide world fills the card: 15 px text is drawn at ~31 px
+
+  // Beats: one idea each. `at` is the start second, `focus` the row the caption talks about.
+  const BEATS = [
+    { at: 0,    cap: 'Your product, in one line.', sub: 'Frame 0 is the cover. Feeds show it before anyone presses play.' },
+    { at: 2.2,  cap: 'One idea per beat.',         sub: 'Captions this big read on a phone.', focus: 0 },
+    { at: 4.4,  cap: 'Show the real thing.',       sub: 'A close-up, with a ring on what the caption names.', focus: 2 },
+    { at: 6.3,  end: true },
+  ];
+  const ROWS = [['parse', 0.92, '412 ms'], ['plan', 0.34, '151 ms'], ['execute', 0.71, '318 ms'], ['fetch', 0.12, '54 ms']];
+
+  const $ = (s) => document.querySelector(s);
+  const clamp01 = (x) => Math.min(1, Math.max(0, x));
+  const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const tw = (t, t0, dur) => ease(clamp01((t - t0) / dur));    // 0 -> 1, starting at t0, over dur seconds
+  const lerp = (a, b, k) => a + (b - a) * k;
+
+  // Background: big soft gradients band after H.264 when they are CSS gradients. Drawn once on a
+  // canvas with a little static grain (seeded, so every run gets the same pixels) they do not.
+  (function drawBg() {
+    const c = $('#bg'), g = c.getContext('2d'), W = c.width, H = c.height, k = W / SW;
+    g.fillStyle = '#070a13'; g.fillRect(0, 0, W, H);
+    const glow = (x, y, r, col) => {
+      const gr = g.createRadialGradient(x * k, y * k, 0, x * k, y * k, r * k);
+      gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    };
+    glow(0, 0, 900, 'rgba(58,80,255,0.46)');
+    glow(1080, 1080, 860, 'rgba(255,104,40,0.42)');
+    const img = g.getImageData(0, 0, W, H), d = img.data;
+    let seed = 1234567;
+    for (let i = 0; i < d.length; i += 4) {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      const v = ((seed >>> 24) / 255 - 0.5) * 6;
+      d[i] += v; d[i + 1] += v; d[i + 2] += v;
+    }
+    g.putImageData(img, 0, 0);
+  })();
+
+  // ---- build the DOM once; seek() only sets styles ----
+  const world = $('#world'), ring = $('#ring');
+  const rowEls = ROWS.map(([name, share, value]) => {
+    const el = document.createElement('div');
+    el.className = 'row';
+    el.innerHTML = `<b>${name}</b><span><i style="width:${share * 100}%"></i></span><em>${value}</em>`;
+    world.insertBefore(el, ring);
+    return el;
+  });
+  const capEls = BEATS.map((b) => {
+    const el = document.createElement('div');
+    el.className = 'cap';
+    if (b.cap) el.innerHTML = `<h1>${b.cap}</h1><p>${b.sub}</p>`;
+    $('#caps').appendChild(el);
+    return el;
+  });
+
+  // Camera views: {x, y, s} puts world point (x, y) at the card's top-left at scale s.
+  // Close-ups are measured from the real layout, so they survive content changes:
+  // target() is the box the caption talks about (a row's name and bar), frame() centres
+  // the camera on a box with some air around it.
+  const overview = { x: 0, y: 0, s: S0 };
+  const target = (row) => {
+    const bar = row.children[1];
+    return { x: row.offsetLeft - 8, y: row.offsetTop + 6, w: bar.offsetLeft + bar.offsetWidth - row.offsetLeft + 16, h: row.offsetHeight - 12 };
+  };
+  const frame = (b, air) => {
+    const s = Math.min(CARD.w / (b.w + 2 * air), CARD.h / (b.h + 2 * air));
+    return { x: b.x + b.w / 2 - CARD.w / s / 2, y: b.y + b.h / 2 - CARD.h / s / 2, s };
+  };
+  const views = BEATS.map((b) => (b.focus == null ? overview : frame(target(rowEls[b.focus]), 40)));
+
+  function seek(t) {
+    // which beat are we in
+    let i = 0;
+    while (i + 1 < BEATS.length && t >= BEATS[i + 1].at) i++;
+    const beat = BEATS[i];
+
+    // captions: the current one rises in, the previous one is gone
+    capEls.forEach((el, k) => {
+      const inK = k === i ? (i === 0 ? 1 : tw(t, beat.at + 0.05, 0.45)) : 0;   // beat 0 is complete at frame 0
+      el.style.opacity = inK;
+      el.style.transform = `translateY(${lerp(26, 0, inK)}px)`;
+    });
+
+    // camera: glide from the previous beat's view to this one
+    const from = views[Math.max(0, i - 1)], to = views[i];
+    const k = i === 0 ? 1 : tw(t, beat.at, 0.8);
+    const v = { x: lerp(from.x, to.x, k), y: lerp(from.y, to.y, k), s: lerp(from.s, to.s, k) };
+    world.style.transform = `translate(${-v.x * v.s}px, ${-v.y * v.s}px) scale(${v.s})`;
+
+    // ring: lives inside the world, so it moves with the camera
+    if (beat.focus != null) {
+      const b = target(rowEls[beat.focus]);
+      ring.style.left = b.x + 'px'; ring.style.top = b.y + 'px';
+      ring.style.width = b.w + 'px'; ring.style.height = b.h + 'px';
+      ring.style.opacity = tw(t, beat.at + 0.7, 0.3);
+    } else ring.style.opacity = 0;
+
+    // end card
+    $('#end').style.opacity = beat.end ? tw(t, beat.at, 0.4) : 0;
+    $('#end').style.visibility = beat.end ? 'visible' : 'hidden';
+  }
+
+  // ---- preview: fit the stage to the window, play, scrub; ?t=3.2 opens paused at that second ----
+  const qs = new URLSearchParams(location.search);
+  const CAPTURE = navigator.webdriver === true || qs.has('capture');
+  const stage = $('#stage');
+  function fit() {
+    const k = Math.min(innerWidth / SW, (innerHeight - (CAPTURE ? 0 : 34)) / SH);
+    stage.style.transform = `scale(${k})`;
+  }
+  addEventListener('resize', fit);
+  if (!CAPTURE) {
+    document.body.classList.add('dev');
+    const scrub = $('#dev-scrub'), label = $('#dev-time'), btn = $('#dev-play');
+    let playing = !qs.has('t'), t = +(qs.get('t') || 0), last = performance.now();
+    const show = () => { seek(t); scrub.value = t / DURATION; label.textContent = t.toFixed(2) + ' / ' + DURATION + ' s'; };
+    scrub.addEventListener('input', () => { playing = false; btn.textContent = 'play'; t = scrub.value * DURATION; show(); });
+    btn.addEventListener('click', () => { playing = !playing; btn.textContent = playing ? 'pause' : 'play'; last = performance.now(); });
+    btn.textContent = playing ? 'pause' : 'play';
+    (function loop(now) {
+      if (playing) { t = (t + (now - last) / 1000) % DURATION; show(); }
+      last = now;
+      requestAnimationFrame(loop);
+    })(performance.now());
+    show();
+  }
+  fit();
+  seek(0);
+
+  window.__film = { fps: FPS, duration: DURATION, ready: document.fonts.ready, seek };
+})();
+</script>
+</body>
+</html>
